@@ -105,7 +105,7 @@ class AssessmentController extends Controller
             $this->data['resultQuestions'] = Question::with('options')->whereAssessmentId($this->data['resultAssessment']->id)->whereStatus(1)->get();
             return view('user.assessment.result', $this->data);
         } catch (\Exception $exception) {
-            dd($exception->getMessage());
+            //dd($exception->getMessage());
             return view('user.dashboard', $this->data);
         }
 
