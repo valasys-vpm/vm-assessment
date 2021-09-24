@@ -30,7 +30,7 @@ $(function (){
                 render: function (data, type, row) {
                     let html = '<ul>';
                     $.each(row.options, function (key, value) {
-                        if(value.is_answer === 1) {
+                        if(parseInt(value.is_answer)) {
                             html += '<li class="text-success">'+value.option+'</li>';
                         } else {
                             html += '<li>'+value.option+'</li>';
