@@ -35,6 +35,17 @@
                                             <h5>Hello {{ Auth::user()->first_name }}</h5>
                                         </div>
                                         <div class="card-block">
+                                            <h5>Assessment</h5>
+                                            <br>
+                                            <p>This test consists of Multiple Choice Questions (MCQs) based on basic technical concepts as well as some basic questions on business operations and our online services.</p>
+                                            <br>
+                                            <h5>Instructions</h5>
+                                            <br>
+                                            <ol type="1">
+                                                <li>Total Number of Questions – 20</li>
+                                                <li>Time Limit – 15 Minutes. (It will appear on the right bottom of the page)</li>
+                                                <li>Page will not be refresh once you begin the test.</li>
+                                            </ol>
                                             @if(isset($resultUserAssessment) && !empty($resultUserAssessment))
                                                 @if(!$resultUserAssessment->attempted)
                                                 <button onclick="window.location.href='{{ route('user.assessment.live', base64_encode($resultAssessment->id)) }}'" type="button" class="btn btn-outline-success btn-lg" title="" data-toggle="tooltip" data-original-title="Click to Continue Assessment">Continue Assessment</button>
