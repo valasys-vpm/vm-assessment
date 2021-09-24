@@ -99,10 +99,16 @@ class AssessmentController extends Controller
 
     public function assessmentResult($userAssessmentId)
     {
-        $this->data['resultUserAssessment'] = UserAssessment::findOrFail(base64_decode($userAssessmentId));
-        $this->data['resultAssessment'] = Assessment::findOrFail($this->data['resultUserAssessment']->id);
-        $this->data['resultQuestions'] = Question::with('options')->whereAssessmentId($this->data['resultAssessment']->id)->whereStatus(1)->get();
-        return view('user.assessment.result', $this->data);
+        try {
+            $this->data['resultUserAssessment'] = UserAssessment::findOrFail(base64_decode($userAssessmentId));
+            $this->data['resultAssessment'] = Assessment::findOrFail($this->data['resultUserAssessment']->id);
+            $this->data['resultQuestions'] = Question::with('options')->whereAssessmentId($this->data['resultAssessment']->id)->whereStatus(1)->get();
+            return view('user.assessment.result', $this->data);
+        } catch (\Exception $exception) {
+            dd($exception->getMessage());
+            return view('user.dashboard', $this->data);
+        }
+
     }
 
 }
