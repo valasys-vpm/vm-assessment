@@ -70,22 +70,24 @@ class AssessmentController extends Controller
         try {
             DB::beginTransaction();
             $userAssessment = UserAssessment::findOrFail(base64_decode($attributes['user_assessment_id']));
-            $userAssessment->answer_given = json_encode($attributes['answer']);
-            $userAssessment->attempted = count($attributes['answer']);
-
-            $marks = 0;
-            foreach ($attributes['answer'] as $question_id => $option_id) {
-                $resultOption = QuestionOption::findOrFail($option_id);
-                if($resultOption->is_answer) {
-                    $marks++;
+            if(!empty($userAssessment->answer_given) && $userAssessment->attempted > 0) {
+                $userAssessment->answer_given = json_encode($attributes['answer']);
+                $userAssessment->attempted = count($attributes['answer']);
+                $marks = 0;
+                foreach ($attributes['answer'] as $question_id => $option_id) {
+                    $resultOption = QuestionOption::findOrFail($option_id);
+                    if($resultOption->is_answer) {
+                        $marks++;
+                    }
                 }
+                $userAssessment->marks_obtained = $marks;
+            } else {
+                $userAssessment->rank = 'Cheating';
             }
-
-            $userAssessment->marks_obtained = $marks;
             $userAssessment->save();
             if($userAssessment->id) {
                 DB::commit();
-                $response = array('status' => TRUE, 'message' => 'All the best...');
+                $response = array('status' => TRUE, 'message' => 'Submitted Successfully...');
             } else {
                 throw new \Exception('Something went wrong, please try again.', 1);
             }
