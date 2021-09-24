@@ -82,7 +82,7 @@ class AssessmentController extends Controller
                 }
                 $userAssessment->marks_obtained = $marks;
             } else {
-                $userAssessment->rank = 'Cheating';
+                $userAssessment->rank = 1;
             }
             $userAssessment->save();
             if($userAssessment->id) {
