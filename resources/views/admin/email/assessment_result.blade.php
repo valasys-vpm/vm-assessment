@@ -14,15 +14,15 @@ Please find the results for the assessment conducted on {{ date('d-M-Y', strtoti
         <th>Percentage</th>
     </thead>
     <tbody>
-    <tr>
         @foreach($resultUserAssessment as $userAssessment)
-        <td>{{ $userAssessment->user->first_name.' '.$userAssessment->user->last_name }}</td>
-        <td>{{ $userAssessment->user->employee_code }}</td>
-        <td>{{ $userAssessment->user->designation->name }}</td>
-        <td>{{ $userAssessment->marks_obtained }}</td>
-        <td>{{ ($userAssessment->marks_obtained/$resultAssessment->number_of_questions) * 100 }}%</td>
+        <tr>
+            <td>{{ $userAssessment->user->first_name.' '.$userAssessment->user->last_name }}</td>
+            <td>{{ $userAssessment->user->employee_code }}</td>
+            <td>{{ $userAssessment->user->designation->name }}</td>
+            <td>{{ $userAssessment->marks_obtained }}</td>
+            <td>{{ ($userAssessment->marks_obtained/$resultAssessment->number_of_questions) * 100 }}%</td>
+        </tr>
         @endforeach
-    </tr>
     </tbody>
 </table>
 </body>
