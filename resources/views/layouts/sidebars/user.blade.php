@@ -9,7 +9,7 @@
     </li>
 
     
-    <li class="nav-item @if(Request::route()->getName() == 'user.dashboard') active @endif">
+    <li class="nav-item @if(Request::route()->getName() == 'user.assessment.list') active @endif">
         <a href="{{ route('user.assessment.list') }}" class="nav-link">
             <span class="pcoded-micon"><i class="feather icon-list"></i></span>
             <span class="pcoded-mtext">My Assessments</span>

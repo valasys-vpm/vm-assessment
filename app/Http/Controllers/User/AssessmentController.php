@@ -82,6 +82,7 @@ class AssessmentController extends Controller
 
         return response()->json($ajaxData);
     }
+
     public function startAssessment($assessment_id)
     {
 
@@ -113,8 +114,6 @@ class AssessmentController extends Controller
         $this->data['resultQuestions'] = Question::with('options')->whereAssessmentId(base64_decode($assessment_id))->whereStatus(1)->get();
         return view('user.assessment.test', $this->data);
     }
-
-
 
     public function submit(Request $request)
     {
