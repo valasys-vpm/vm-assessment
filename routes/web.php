@@ -59,7 +59,7 @@ Route::middleware(['web', 'check.user'])->name('user.')->group(function (){
     Route::get('/{id}/start-assessment', [App\Http\Controllers\User\AssessmentController::class, 'startAssessment'])->name('assessment.start_assessment');
     Route::get('/{id}/assessment-test', [App\Http\Controllers\User\AssessmentController::class, 'assessmentLive'])->name('assessment.live');
     Route::get('/{id}/assessment-result', [App\Http\Controllers\User\AssessmentController::class, 'assessmentResult'])->name('assessment.result');
-
+    
     Route::prefix('assessment')->name('assessment.')->group(function()
     {
         //Route::get('/', [App\Http\Controllers\User\AssessmentController::class, 'index'])->name('list');
@@ -75,3 +75,6 @@ Route::middleware(['web', 'check.user'])->name('user.')->group(function (){
     });
 
 });
+
+// Change Password
+Route::any('/update-password', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('update.password');

@@ -160,7 +160,8 @@
         $('.double-click').doubleClickToGo();
     });
 </script>
-
+<!-- jquery-validation Js -->
+<script src="{{ asset('public/template/assets/plugins/jquery-validation/js/jquery.validate.min.js') }}"></script>
 <script type="text/javascript" src="{{asset('public/js/custom.js?='.time()) }}"></script>
 
 @yield('javascript')
