@@ -7,12 +7,14 @@ use App\Models\Assessment;
 use App\Models\UserAssessment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Repository\UserRepository\UserRepository;
 
 class HomeController extends Controller
 {
     private $data;
+    private $userRepository;
 
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
         $this->data = array();
     }
@@ -25,6 +27,9 @@ class HomeController extends Controller
         }
         return view('user.dashboard', $this->data);
     }
+    
+
+    
 
 
 }

@@ -28,6 +28,60 @@ class AssessmentController extends Controller
         $this->questionRepository = $questionRepository;
     }
 
+    public function index()
+    {
+        return view('user.assessment.list', $this->data);
+    }
+
+    public function getMyAssessments(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $filters = array_filter(json_decode($request->get('filters'), true));
+        $search_data = $request->get('search');
+        $searchValue = $search_data['value'];
+        $order = $request->get('order');
+        $draw = $request->get('draw');
+        $limit = $request->get("length"); // Rows display per page
+        $offset = $request->get("start");
+
+        $query = UserAssessment::query();
+        $query->whereUserId(Auth::id());
+        $query->with('assessment');
+        $totalRecords = $query->count();
+
+        //Search Data
+        if(isset($searchValue) && $searchValue != "") {
+            //$query->where("name", "like", "%$searchValue%");
+        }
+        //Filters
+        if(!empty($filters)) { }
+
+
+        //Order By
+        $orderColumn = $order[0]['column'];
+        $orderDirection = $order[0]['dir'];
+        switch ($orderColumn) {
+            case '0': $query->orderBy('assessment_id', $orderDirection); break;
+            case '1': $query->orderBy('date', $orderDirection); break;
+            case '2': $query->orderBy('number_of_questions', $orderDirection); break;
+            case '3': $query->orderBy('created_at', $orderDirection); break;
+            case '4': $query->orderBy('updated_at', $orderDirection); break;
+            default: $query->orderBy('created_at'); break;
+        }
+
+        $totalFilterRecords = $query->count();
+        $query->offset($offset);
+        $query->limit($limit);
+        $result = $query->get();
+
+        $ajaxData = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalFilterRecords,
+            "aaData" => $result
+        );
+
+        return response()->json($ajaxData);
+    }
     public function startAssessment($assessment_id)
     {
 

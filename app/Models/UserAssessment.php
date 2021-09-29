@@ -16,4 +16,9 @@ class UserAssessment extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function assessment()
+    {
+        return $this->hasOne(Assessment::class, 'id', 'assessment_id');
+    }
 }
