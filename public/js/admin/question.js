@@ -8,7 +8,7 @@ $(function (){
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": $('meta[name="base-path"]').attr('content') + '/admin/question/get-questions',
+            "url": $('meta[name="base-path"]').attr('content') + '/admin/question/get-questions/'+$('#assessment_id').val(),
             data: {
                 filters: function (){
                     let obj = {

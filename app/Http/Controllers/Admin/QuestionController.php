@@ -72,7 +72,7 @@ class QuestionController extends Controller
         }
     }
 
-    public function getQuestions (Request $request): \Illuminate\Http\JsonResponse
+    public function getQuestions ($id = null, Request $request): \Illuminate\Http\JsonResponse
     {
         $filters = array_filter(json_decode($request->get('filters'), true));
         $search_data = $request->get('search');
@@ -83,6 +83,9 @@ class QuestionController extends Controller
         $offset = $request->get("start");
 
         $query = Question::query();
+        if(isset($id) && !empty($id)) {
+            $query->whereAssessmentId($id);
+        }
         $query->with([
             'category',
             'options'
