@@ -128,6 +128,57 @@ class AssessmentController extends Controller
         return response()->json($ajaxData);
     }
 
+    public function getAssessmentResult ($id = null, Request $request): \Illuminate\Http\JsonResponse
+    {
+        $filters = array_filter(json_decode($request->get('filters'), true));
+        $search_data = $request->get('search');
+        $searchValue = $search_data['value'];
+        $order = $request->get('order');
+        $draw = $request->get('draw');
+        $limit = $request->get("length"); // Rows display per page
+        $offset = $request->get("start");
+
+        $query = UserAssessment::query();
+        if (isset($id) && !empty($id)) {
+            $query->whereAssessmentId(base64_decode($id));
+        }
+        $query->with('user');
+        $totalRecords = $query->count();
+
+        //Search Data
+        if(isset($searchValue) && $searchValue != "") {
+            $query->where("name", "like", "%$searchValue%");
+        }
+        //Filters
+        if(!empty($filters)) { }
+
+
+        //Order By
+        $orderColumn = $order[0]['column'];
+        $orderDirection = $order[0]['dir'];
+        switch ($orderColumn) {
+            case '0': $query->orderBy('created_at', $orderDirection); break;
+            case '1': $query->orderBy('created_at', $orderDirection); break;
+            case '2': $query->orderBy('created_at', $orderDirection); break;
+            case '3': $query->orderBy('created_at', $orderDirection); break;
+            default: $query->orderBy('created_at'); break;
+        }
+
+        $totalFilterRecords = $query->count();
+        $query->offset($offset);
+        $query->limit($limit);
+        $result = $query->get();
+
+        $ajaxData = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalFilterRecords,
+            "aaData" => $result
+        );
+
+        return response()->json($ajaxData);
+    }
+
     public function sendAssessmentResult($id)
     {
         $response = array('status' => FALSE, 'message' => 'Something went wrong, please try again.');

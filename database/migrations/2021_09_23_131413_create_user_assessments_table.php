@@ -25,7 +25,7 @@ class CreateUserAssessmentsTable extends Migration
             $table->json('answer_given')->nullable();
             $table->integer('attempted')->default(0);
             $table->integer('marks_obtained')->default(0);
-            $table->integer('rank')->nullable();
+            $table->integer('submit_count')->default(0)->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();

@@ -123,7 +123,7 @@ class AssessmentController extends Controller
         try {
             DB::beginTransaction();
             $userAssessment = UserAssessment::findOrFail(base64_decode($attributes['user_assessment_id']));
-            if(empty($userAssessment->answer_given) && $userAssessment->attempted == 0) {
+            if($userAssessment->submit_count == 0) {
                 $userAssessment->answer_given = json_encode($attributes['answer']);
                 $userAssessment->attempted = count($attributes['answer']);
                 $marks = 0;
@@ -134,9 +134,9 @@ class AssessmentController extends Controller
                     }
                 }
                 $userAssessment->marks_obtained = $marks;
-                $userAssessment->rank = 1;
+                $userAssessment->submit_count = 1;
             } else {
-                $userAssessment->rank = $userAssessment->rank + 1;
+                $userAssessment->submit_count = $userAssessment->submit_count + 1;
             }
             $userAssessment->save();
             if($userAssessment->id) {
