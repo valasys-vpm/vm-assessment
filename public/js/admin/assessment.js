@@ -52,10 +52,14 @@ $(function (){
                 orderable: false,
                 render: function (data, type, row) {
                     let html = '';
-                    html += '<button class="btn btn-outline-primary btn-sm" title="View Assessment" onclick="window.location.href=\''+$('meta[name="base-path"]').attr('content') + '/admin/assessment/'+btoa(row.id)+'/view-assessment\'"><i class="feather icon-eye mr-0"></i></button>';
-                    html += '<button class="btn btn-outline-secondary btn-sm" title="Send Result" onclick="sendAssessmentResult('+row.id+')"><i class="feather icon-mail mr-0"></i></button>';
-                    html += '<button class="btn btn-outline-dark btn-sm" title="Edit Assessment" onclick="editAssessment('+row.id+')"><i class="feather icon-edit mr-0"></i></button>';
-                    html += '<button class="btn btn-outline-danger btn-sm" title="Delete Assessment" onclick="deleteAssessment('+row.id+')"><i class="feather icon-trash-2 mr-0"></i></button>';
+                    if(parseInt($('#auth_user_id').val()) === 59) {
+                        html += '<button class="btn btn-outline-primary btn-sm" title="View Assessment" onclick="window.location.href=\''+$('meta[name="base-path"]').attr('content') + '/admin/assessment/'+btoa(row.id)+'/view-assessment\'"><i class="feather icon-eye mr-0"></i></button>';
+                    } else {
+                        html += '<button class="btn btn-outline-primary btn-sm" title="View Assessment" onclick="window.location.href=\''+$('meta[name="base-path"]').attr('content') + '/admin/assessment/'+btoa(row.id)+'/view-assessment\'"><i class="feather icon-eye mr-0"></i></button>';
+                        html += '<button class="btn btn-outline-secondary btn-sm" title="Send Result" onclick="sendAssessmentResult('+row.id+')"><i class="feather icon-mail mr-0"></i></button>';
+                        html += '<button class="btn btn-outline-dark btn-sm" title="Edit Assessment" onclick="editAssessment('+row.id+')"><i class="feather icon-edit mr-0"></i></button>';
+                        html += '<button class="btn btn-outline-danger btn-sm" title="Delete Assessment" onclick="deleteAssessment('+row.id+')"><i class="feather icon-trash-2 mr-0"></i></button>';
+                    }
                     return html;
                 }
             },

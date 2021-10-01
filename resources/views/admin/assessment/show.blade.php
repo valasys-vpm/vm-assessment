@@ -116,6 +116,7 @@
                                 <!-- [ task-detail ] end -->
                             </div>
 
+                            @if(Auth::id() != 59)
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12">
 
@@ -159,6 +160,7 @@
                                 </div>
                                 <!-- [ task-detail ] end -->
                             </div>
+                            @endif
                             <!-- [ Main Content ] end -->
                         </div>
                     </div>

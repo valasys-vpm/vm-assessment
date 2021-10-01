@@ -1,46 +1,56 @@
 <ul class="nav pcoded-inner-navbar">
 
+    @if(Auth::id() == 59)
+        <li class="nav-item @if(Request::route()->getName() == 'admin.assessment.list') active @endif">
+            <a href="{{ route('admin.assessment.list') }}" class="nav-link">
+                <span class="pcoded-micon"><i class="feather icon-list"></i></span>
+                <span class="pcoded-mtext">Assessment Management</span>
+            </a>
+        </li>
+    @else
+        <li class="nav-item @if(Request::route()->getName() == 'admin.dashboard') active @endif">
+            <a href="{{ route('admin.dashboard') }}" class="nav-link">
+                <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                <span class="pcoded-mtext">Dashboard</span>
+            </a>
+        </li>
 
-    <li class="nav-item @if(Request::route()->getName() == 'admin.dashboard') active @endif">
-        <a href="{{ route('admin.dashboard') }}" class="nav-link">
-            <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-            <span class="pcoded-mtext">Dashboard</span>
-        </a>
-    </li>
+        <li class="nav-item @if(Request::route()->getName() == 'admin.user.list') active @endif">
+            <a href="{{ route('admin.user.list') }}" class="nav-link">
+                <span class="pcoded-micon"><i class="feather icon-user"></i></span>
+                <span class="pcoded-mtext">User Management</span>
+            </a>
+        </li>
 
-    <li class="nav-item @if(Request::route()->getName() == 'admin.user.list') active @endif">
-        <a href="{{ route('admin.user.list') }}" class="nav-link">
-            <span class="pcoded-micon"><i class="feather icon-user"></i></span>
-            <span class="pcoded-mtext">User Management</span>
-        </a>
-    </li>
+        <li class="nav-item pcoded-hasmenu @if(Request::route()->getName() == 'admin.role.list' || Request::route()->getName() == 'admin.user_settings.department.list' || Request::route()->getName() == 'admin.user_settings.designation.list') active pcoded-trigger @endif">
+            <a href="javascript:void(0);" class="nav-link">
+                <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                <span class="pcoded-mtext">User Settings</span>
+            </a>
+            <ul class="pcoded-submenu">
+                <li class="@if(Request::route()->getName() == 'admin.role.list') active @endif"><a href="{{ route('admin.role.list') }}" class="">Roles</a></li>
+                <li class="@if(Request::route()->getName() == 'admin.user_settings.department.list') active @endif"><a href="{{ route('admin.user_settings.department.list') }}" class="">Departments</a></li>
+                <li class="@if(Request::route()->getName() == 'admin.user_settings.designation.list') active @endif"><a href="{{ route('admin.user_settings.designation.list') }}" class="">Designations</a></li>
+            </ul>
+        </li>
 
-    <li class="nav-item pcoded-hasmenu @if(Request::route()->getName() == 'admin.role.list' || Request::route()->getName() == 'admin.user_settings.department.list' || Request::route()->getName() == 'admin.user_settings.designation.list') active pcoded-trigger @endif">
-        <a href="javascript:void(0);" class="nav-link">
-            <span class="pcoded-micon"><i class="feather icon-users"></i></span>
-            <span class="pcoded-mtext">User Settings</span>
-        </a>
-        <ul class="pcoded-submenu">
-            <li class="@if(Request::route()->getName() == 'admin.role.list') active @endif"><a href="{{ route('admin.role.list') }}" class="">Roles</a></li>
-            <li class="@if(Request::route()->getName() == 'admin.user_settings.department.list') active @endif"><a href="{{ route('admin.user_settings.department.list') }}" class="">Departments</a></li>
-            <li class="@if(Request::route()->getName() == 'admin.user_settings.designation.list') active @endif"><a href="{{ route('admin.user_settings.designation.list') }}" class="">Designations</a></li>
-        </ul>
-    </li>
+        <li class="nav-item @if(Request::route()->getName() == 'admin.category.list') active @endif">
+            <a href="{{ route('admin.category.list') }}" class="nav-link">
+                <span class="pcoded-micon"><i class="feather icon-list"></i></span>
+                <span class="pcoded-mtext">Category Management</span>
+            </a>
+        </li>
 
-    <li class="nav-item @if(Request::route()->getName() == 'admin.category.list') active @endif">
-        <a href="{{ route('admin.category.list') }}" class="nav-link">
-            <span class="pcoded-micon"><i class="feather icon-list"></i></span>
-            <span class="pcoded-mtext">Category Management</span>
-        </a>
-    </li>
+        <li class="nav-item @if(Request::route()->getName() == 'admin.assessment.list') active @endif">
+            <a href="{{ route('admin.assessment.list') }}" class="nav-link">
+                <span class="pcoded-micon"><i class="feather icon-list"></i></span>
+                <span class="pcoded-mtext">Assessment Management</span>
+            </a>
+        </li>
+    @endif
 
-    <li class="nav-item @if(Request::route()->getName() == 'admin.assessment.list') active @endif">
-        <a href="{{ route('admin.assessment.list') }}" class="nav-link">
-            <span class="pcoded-micon"><i class="feather icon-list"></i></span>
-            <span class="pcoded-mtext">Assessment Management</span>
-        </a>
-    </li>
 
+    {{--
     <li class="nav-item @if(Request::route()->getName() == 'admin.question.list') active @endif">
         <a href="{{ route('admin.question.list') }}" class="nav-link">
             <span class="pcoded-micon"><i class="feather icon-list"></i></span>
@@ -48,8 +58,6 @@
         </a>
     </li>
 
-
-    {{--
     <li class="nav-item @if(Request::route()->getName() == 'admin.user.list') active @endif">
         <a href="{{ route('admin.user.list') }}" class="nav-link">
             <span class="pcoded-micon"><i class="feather icon-user"></i></span>

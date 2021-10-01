@@ -115,6 +115,8 @@
             </div>
         </div>
     </div>
+
+    <input type="hidden" id="auth_user_id" value="{{ Auth::id() }}">
 @endsection
 
 @section('javascript')
