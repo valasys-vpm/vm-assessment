@@ -59,7 +59,7 @@
                                                                 <span class="text-secondary">{{ $i++ }})</span>
                                                             </div>
                                                             <div class="col-md-11 pl-0">
-                                                                <span class="text-secondary">{{ $question->question }}</span>
+                                                                <span class="text-secondary">{!! $question->question !!}</span>
                                                             </div>
                                                         </div>
                                                     </div>
