@@ -8,6 +8,7 @@ use App\Models\Question;
 use App\Models\UserAssessment;
 use App\Repository\AssessmentRepository\AssessmentRepository;
 use App\Repository\CategoryRepository\CategoryRepository;
+use App\Repository\UserAssessmentRepository\UserAssessmentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -16,12 +17,18 @@ class AssessmentController extends Controller
 {
     private $data;
     private $assessmentRepository;
+    private $userAssessmentRepository;
     private $categoryRepository;
 
-    public function __construct(AssessmentRepository $assessmentRepository, CategoryRepository $categoryRepository)
+    public function __construct(
+        AssessmentRepository $assessmentRepository,
+        UserAssessmentRepository $userAssessmentRepository,
+        CategoryRepository $categoryRepository
+    )
     {
         $this->data = array();
         $this->assessmentRepository = $assessmentRepository;
+        $this->userAssessmentRepository = $userAssessmentRepository;
         $this->categoryRepository = $categoryRepository;
     }
 
@@ -35,6 +42,13 @@ class AssessmentController extends Controller
         $this->data['resultAssessment'] = $this->assessmentRepository->find(base64_decode($id));
         $this->data['resultCategories'] = $this->categoryRepository->get(array('status' => 1));
         return view('admin.assessment.show', $this->data);
+    }
+
+    public function showUserAssessment($id)
+    {
+        $this->data['resultUserAssessment'] = $this->userAssessmentRepository->find(base64_decode($id));
+        $this->data['resultQuestions'] = Question::with('options')->whereAssessmentId($this->data['resultUserAssessment']->assessment_id)->whereStatus(1)->get();
+        return view('admin.assessment.show_user_assessment', $this->data);
     }
 
     public function store(Request $request): \Illuminate\Http\JsonResponse

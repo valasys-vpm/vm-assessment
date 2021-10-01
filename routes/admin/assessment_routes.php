@@ -13,4 +13,6 @@ Route::prefix('assessment')->name('assessment.')->group(function()
     Route::any('/destroy/{id}', [App\Http\Controllers\Admin\AssessmentController::class, 'destroy'])->name('destroy');
 
     Route::any('/get-assessment-result/{id?}', [App\Http\Controllers\Admin\AssessmentController::class, 'getAssessmentResult'])->name('get_assessment_result');
+
+    Route::get('/{id}/view-user-assessment', [App\Http\Controllers\Admin\AssessmentController::class, 'showUserAssessment'])->name('show_user_assessment');
 });

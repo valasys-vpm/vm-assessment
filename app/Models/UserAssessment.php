@@ -21,4 +21,5 @@ class UserAssessment extends Model
     {
         return $this->hasOne(Assessment::class, 'id', 'assessment_id');
     }
+
 }

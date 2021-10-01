@@ -101,6 +101,7 @@
                                                             <th class="text-center">Attempted</th>
                                                             <th class="text-center">Marks Obtained</th>
                                                             <th class="text-center">Submit Count</th>
+                                                            <th class="text-center">Action</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="text-center text-muted">

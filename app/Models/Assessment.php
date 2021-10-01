@@ -11,4 +11,6 @@ class Assessment extends Model
     use SoftDeletes;
     protected $guarded = array();
     public $timestamps = true;
+
+
 }
