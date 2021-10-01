@@ -161,7 +161,7 @@ class AssessmentController extends Controller
             case '1': $query->orderBy('attempted', $orderDirection); break;
             case '2': $query->orderBy('marks_obtained', $orderDirection); break;
             case '3': $query->orderBy('submit_count', $orderDirection); break;
-            default: $query->orderBy('marks_obtained'); break;
+            default: $query->orderBy('marks_obtained', 'DESC'); break;
         }
 
         $totalFilterRecords = $query->count();
