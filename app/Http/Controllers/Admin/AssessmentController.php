@@ -139,7 +139,7 @@ class AssessmentController extends Controller
             $this->data['resultAssessment'] = Assessment::findOrFail(base64_decode($id));
             $details = $this->data;
             $html = view('admin.email.assessment_result', $this->data)->render();
-            dd($html);
+            //dd($html);
             //return response()->json(array('status' => true, 'message' => $response['message'], 'html' => $html));
             //dd($this->data['resultUserAssessment']->toArray());
             Mail::send('admin.email.assessment_result', $details, function ($email) use ($details){
