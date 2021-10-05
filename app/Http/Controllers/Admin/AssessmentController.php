@@ -236,6 +236,7 @@ class AssessmentController extends Controller
         try {
             //Send Mail
             $query = User::query();
+            $query->whereRoleId(2);
             $query->with('userAssessments');
             $query->orderBy('employee_code');
             $this->data['results'] = $query->get();

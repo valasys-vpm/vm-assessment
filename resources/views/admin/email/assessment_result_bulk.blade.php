@@ -34,6 +34,9 @@
                         @if($assessment->id == $userAssessment->assessment_id)
                             <td>{{ $userAssessment->marks_obtained }}</td>
                             <td>{{ ($userAssessment->marks_obtained/$assessment->number_of_questions) * 100 }}%</td>
+                        @else
+                            <td style="background: red;"><strong>NA</strong></td>
+                            <td style="background: red;"><strong>NA</strong></td>
                         @endif
                     @endforeach
                 @endforeach
