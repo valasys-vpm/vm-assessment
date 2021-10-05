@@ -245,6 +245,7 @@ class AssessmentController extends Controller
             $this->data['resultAssessments'] = Assessment::where('status', 2)->get();
 
             $details = $this->data;
+            return view('admin.email.assessment_result_bulk', $this->data);
             $html = view('admin.email.assessment_result_bulk', $this->data)->render();
             dd($html);
             //return response()->json(array('status' => true, 'message' => $response['message'], 'html' => $html));
