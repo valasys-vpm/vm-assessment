@@ -243,11 +243,11 @@ class AssessmentController extends Controller
             $this->data['resultAssessments'] = Assessment::where('status', 2)->get();
 
             $details = $this->data;
-            $html = view('admin.email.assessment_result', $this->data)->render();
+            $html = view('admin.email.assessment_result_bulk', $this->data)->render();
             dd($html);
             //return response()->json(array('status' => true, 'message' => $response['message'], 'html' => $html));
             //dd($this->data['resultUserAssessment']->toArray());
-            Mail::send('admin.email.assessment_result', $details, function ($email) use ($details){
+            Mail::send('admin.email.assessment_result_bulk', $details, function ($email) use ($details){
                 $email->to([
                     'sagar@valasys.com',
                     'tejaswi@valasys.com'
