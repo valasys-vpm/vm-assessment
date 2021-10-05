@@ -25,9 +25,9 @@
     <tbody>
         @foreach($results as $user)
         <tr>
-            <td>{{ $user->user->first_name.' '.$user->user->last_name }}</td>
-            <td>{{ $user->user->employee_code }}</td>
-            <td>{{ $user->user->designation->name }}</td>
+            <td>{{ $user->first_name.' '.$user->last_name }}</td>
+            <td>{{ $user->employee_code }}</td>
+            <td>{{ $user->designation->name }}</td>
             @if(isset($resultAssessments) && !empty($resultAssessments))
                 @foreach($resultAssessments as $assessment)
                     @foreach($user->userAssessments as $userAssessment)
