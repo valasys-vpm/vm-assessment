@@ -33,7 +33,7 @@
                     @foreach($user->userAssessments as $userAssessment)
                         @if($assessment->id == $userAssessment->assessment_id)
                             <td>{{ $userAssessment->marks_obtained }}</td>
-                            <td>{{ ($userAssessment->marks_obtained/$resultAssessment->number_of_questions) * 100 }}%</td>
+                            <td>{{ ($userAssessment->marks_obtained/$assessment->number_of_questions) * 100 }}%</td>
                         @endif
                     @endforeach
                 @endforeach
