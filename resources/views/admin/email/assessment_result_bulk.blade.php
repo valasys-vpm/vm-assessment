@@ -1,10 +1,6 @@
 <html>
 
 <body>
-Hi Sir,
-<br><br>
-Please find the results for the assessment conducted on {{ date('d-M-Y', strtotime($resultAssessment->date)) }}:
-<br><br>
 <table border="1">
     <thead>
         <tr>
