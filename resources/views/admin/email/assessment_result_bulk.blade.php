@@ -43,8 +43,8 @@
                     @forelse($user->userAssessments as $userAssessment)
                         @php
                             $resultUserAssessmentIds = $user->userAssessments->pluck('id');
+                            $resultUserAssessmentIds = $resultUserAssessmentIds->toArray();
                         @endphp
-                        {{ dd($resultUserAssessmentIds->toArray()) }}
                         @if(in_array($assessment->id, $resultUserAssessmentIds))
                             @php
                                 $totalMarksObtained = $totalMarksObtained + $userAssessment->marks_obtained;
