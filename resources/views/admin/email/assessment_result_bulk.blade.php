@@ -37,7 +37,7 @@
             <td>{{ $user->designation->name }}</td>
             @if(isset($resultAssessments) && !empty($resultAssessments))
                 @foreach($resultAssessments as $assessment)
-                    @forelse$user->userAssessments as $userAssessment)
+                    @forelse($user->userAssessments as $userAssessment)
                         @if($assessment->id == $userAssessment->assessment_id)
                             @php
                                 $totalMarksObtained = $totalMarksObtained + $userAssessment->marks_obtained;
