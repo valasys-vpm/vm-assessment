@@ -53,7 +53,7 @@
                 @endforeach
             @endif
             <td>{{ $totalMarksObtained }}</td>
-            <td>{{ ($totalMarksObtained/$totalMarks) * 100 }}%</td>
+            <td>@if($totalMarks > 0) {{ ($totalMarksObtained/$totalMarks) * 100 }}% @else 00% @endif</td>
         </tr>
         @endforeach
     </tbody>
