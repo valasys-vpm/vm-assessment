@@ -36,19 +36,20 @@
             <td>{{ $user->employee_code }}</td>
             <td>{{ $user->designation->name }}</td>
             @if(isset($resultAssessments) && !empty($resultAssessments))
+                @php
+                    $resultIds = $user->userAssessments->pluck('assessment_id');
+                    $resultUserAssessmentIds = $resultIds->toArray();
+                @endphp
                 @foreach($resultAssessments as $assessment)
                     @php
                         $totalMarks = $totalMarks + $assessment->number_of_questions;
-
-                        $resultUserAssessmentIds = $user->userAssessments->pluck('id');
-                        $resultUserAssessmentIds = $resultUserAssessmentIds->toArray();
                     @endphp
+
                     @if(in_array($assessment->id, $resultUserAssessmentIds))
                         @foreach($user->userAssessments as $userAssessment)
                             @if($assessment->id == $userAssessment->assessment_id)
                                 @php
                                     $totalMarksObtained = $totalMarksObtained + $userAssessment->marks_obtained;
-                                    $totalMarks = $totalMarks + $assessment->number_of_questions;
                                 @endphp
                                 <td>{{ $userAssessment->marks_obtained }}</td>
                                 <td>{{ ($userAssessment->marks_obtained/$assessment->number_of_questions) * 100 }}%</td>
