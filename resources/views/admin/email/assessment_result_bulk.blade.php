@@ -37,14 +37,23 @@
             <td>{{ $user->designation->name }}</td>
             @if(isset($resultAssessments) && !empty($resultAssessments))
                 @foreach($resultAssessments as $assessment)
+                    @php
+                        $totalMarks = $totalMarks + $assessment->number_of_questions;
+                    @endphp
                     @forelse($user->userAssessments as $userAssessment)
-                        @if($assessment->id == $userAssessment->assessment_id)
+                        @php
+                            $resultUserAssessmentIds = $user->userAssessments->pluck('id');
+                        @endphp
+                        @if(in_array($assessment->id, $resultUserAssessmentIds))
                             @php
                                 $totalMarksObtained = $totalMarksObtained + $userAssessment->marks_obtained;
                                 $totalMarks = $totalMarks + $assessment->number_of_questions;
                             @endphp
                             <td>{{ $userAssessment->marks_obtained }}</td>
                             <td>{{ ($userAssessment->marks_obtained/$assessment->number_of_questions) * 100 }}%</td>
+                        @else
+                            <td style="background: red;"><strong>NA</strong></td>
+                            <td style="background: red;"><strong>NA</strong></td>
                         @endif
                     @empty
                         <td style="background: red;"><strong>NA</strong></td>
