@@ -39,7 +39,7 @@
                                             <h5>Assessments</h5>
                                             <div class="float-right">
                                                 <button type="button" class="btn btn-primary btn-square btn-sm" onclick="addAssessment();"><i class="feather icon-plus"></i>New Assessment</button>
-                                                <button type="button" class="btn btn-primary btn-square btn-sm" onclick="sendAssessmentResultBulk();"><i class="feather icon-plus"></i>New Assessment</button>
+                                                <button type="button" class="btn btn-primary btn-square btn-sm" onclick="sendAssessmentResultBulk();"><i class="feather icon-mail"></i>Send Result</button>
                                             </div>
                                         </div>
                                         <div class="card-block">
