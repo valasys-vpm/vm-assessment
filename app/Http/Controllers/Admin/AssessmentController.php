@@ -237,7 +237,6 @@ class AssessmentController extends Controller
             //Send Mail
             $query = User::query();
             $query->whereRoleId(2);
-            $query->where(2);
             $query->whereNotIn('employee_code', ['VBS034']);
             $query->orderBy('employee_code');
             $this->data['results'] = $query->get();
