@@ -46,12 +46,14 @@
                             $resultUserAssessmentIds = $resultUserAssessmentIds->toArray();
                         @endphp
                         @if(in_array($assessment->id, $resultUserAssessmentIds))
-                            @php
-                                $totalMarksObtained = $totalMarksObtained + $userAssessment->marks_obtained;
-                                $totalMarks = $totalMarks + $assessment->number_of_questions;
-                            @endphp
-                            <td>{{ $userAssessment->marks_obtained }}</td>
-                            <td>{{ ($userAssessment->marks_obtained/$assessment->number_of_questions) * 100 }}%</td>
+                            @if($assessment->id == $userAssessment->assessment_id)
+                                @php
+                                    $totalMarksObtained = $totalMarksObtained + $userAssessment->marks_obtained;
+                                    $totalMarks = $totalMarks + $assessment->number_of_questions;
+                                @endphp
+                                <td>{{ $userAssessment->marks_obtained }}</td>
+                                <td>{{ ($userAssessment->marks_obtained/$assessment->number_of_questions) * 100 }}%</td>
+                            @endif
                         @else
                             <td style="background: red;"><strong>NA</strong></td>
                             <td style="background: red;"><strong>NA</strong></td>
