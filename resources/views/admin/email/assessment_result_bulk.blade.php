@@ -49,7 +49,7 @@
                     @empty
                         <td style="background: red;"><strong>NA</strong></td>
                         <td style="background: red;"><strong>NA</strong></td>
-                    @endforeach
+                    @endforelse
                 @endforeach
             @endif
             <td>{{ $totalMarksObtained }}</td>
