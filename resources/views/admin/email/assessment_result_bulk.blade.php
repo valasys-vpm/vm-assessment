@@ -39,13 +39,12 @@
                 @foreach($resultAssessments as $assessment)
                     @php
                         $totalMarks = $totalMarks + $assessment->number_of_questions;
+
+                        $resultUserAssessmentIds = $user->userAssessments->pluck('id');
+                        $resultUserAssessmentIds = $resultUserAssessmentIds->toArray();
                     @endphp
-                    @forelse($user->userAssessments as $userAssessment)
-                        @php
-                            $resultUserAssessmentIds = $user->userAssessments->pluck('id');
-                            $resultUserAssessmentIds = $resultUserAssessmentIds->toArray();
-                        @endphp
-                        @if(in_array($assessment->id, $resultUserAssessmentIds))
+                    @if(in_array($assessment->id, $resultUserAssessmentIds))
+                        @foreach($user->userAssessments as $userAssessment)
                             @if($assessment->id == $userAssessment->assessment_id)
                                 @php
                                     $totalMarksObtained = $totalMarksObtained + $userAssessment->marks_obtained;
@@ -54,14 +53,11 @@
                                 <td>{{ $userAssessment->marks_obtained }}</td>
                                 <td>{{ ($userAssessment->marks_obtained/$assessment->number_of_questions) * 100 }}%</td>
                             @endif
-                        @else
-                            <td style="background: red;"><strong>NA</strong></td>
-                            <td style="background: red;"><strong>NA</strong></td>
-                        @endif
-                    @empty
+                        @endforeach
+                    @else
                         <td style="background: red;"><strong>NA</strong></td>
                         <td style="background: red;"><strong>NA</strong></td>
-                    @endforelse
+                    @endif
                 @endforeach
             @endif
             <td>{{ $totalMarksObtained }}</td>
