@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Designation::class, 'id', 'designation_id');
     }
+
+    public function userAssessments()
+    {
+        return $this->hasMany(UserAssessment::class, 'user_id', 'id');
+    }
 }

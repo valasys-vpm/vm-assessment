@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Assessment;
 use App\Models\Question;
+use App\Models\User;
 use App\Models\UserAssessment;
 use App\Repository\AssessmentRepository\AssessmentRepository;
 use App\Repository\CategoryRepository\CategoryRepository;
@@ -207,7 +208,43 @@ class AssessmentController extends Controller
             $this->data['resultAssessment'] = Assessment::findOrFail(base64_decode($id));
             $details = $this->data;
             $html = view('admin.email.assessment_result', $this->data)->render();
-            //dd($html);
+            dd($html);
+            //return response()->json(array('status' => true, 'message' => $response['message'], 'html' => $html));
+            //dd($this->data['resultUserAssessment']->toArray());
+            Mail::send('admin.email.assessment_result', $details, function ($email) use ($details){
+                $email->to([
+                    'sagar@valasys.com',
+                    'tejaswi@valasys.com'
+                ])->subject('Result for '.$this->data['resultAssessment']->name.' | '.date('d-M-Y', strtotime($this->data['resultAssessment']->date)));
+            });
+            $response = array('status' => TRUE, 'message' => 'Mail sent successfully.');
+        } catch (\Exception $exception) {
+            dd($exception->getMessage());
+            $response = array('status' => FALSE, 'message' => 'Something went wrong, please try again.');
+        }
+
+        if($response['status'] == TRUE) {
+            return response()->json(array('status' => true, 'message' => $response['message']));
+        } else {
+            return response()->json(array('status' => false, 'message' => $response['message']));
+        }
+    }
+
+    public function sendAssessmentResultBulk()
+    {
+        $response = array('status' => FALSE, 'message' => 'Something went wrong, please try again.');
+        try {
+            //Send Mail
+            $query = User::query();
+            $query->with('userAssessments');
+            $query->orderBy('employee_code');
+            $this->data['results'] = $query->get();
+
+            $this->data['resultAssessments'] = Assessment::where('status', 2)->get();
+
+            $details = $this->data;
+            $html = view('admin.email.assessment_result', $this->data)->render();
+            dd($html);
             //return response()->json(array('status' => true, 'message' => $response['message'], 'html' => $html));
             //dd($this->data['resultUserAssessment']->toArray());
             Mail::send('admin.email.assessment_result', $details, function ($email) use ($details){

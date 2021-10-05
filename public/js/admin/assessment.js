@@ -57,6 +57,7 @@ $(function (){
                     } else {
                         html += '<button class="btn btn-outline-primary btn-sm" title="View Assessment" onclick="window.location.href=\''+$('meta[name="base-path"]').attr('content') + '/admin/assessment/'+btoa(row.id)+'/view-assessment\'"><i class="feather icon-eye mr-0"></i></button>';
                         html += '<button class="btn btn-outline-secondary btn-sm" title="Send Result" onclick="sendAssessmentResult('+row.id+')"><i class="feather icon-mail mr-0"></i></button>';
+                        html += '<button class="btn btn-outline-secondary btn-sm" title="Send Result Bulk" onclick="sendAssessmentResultBulk()"><i class="feather icon-mail mr-0"></i></button>';
                         html += '<button class="btn btn-outline-dark btn-sm" title="Edit Assessment" onclick="editAssessment('+row.id+')"><i class="feather icon-edit mr-0"></i></button>';
                         html += '<button class="btn btn-outline-danger btn-sm" title="Delete Assessment" onclick="deleteAssessment('+row.id+')"><i class="feather icon-trash-2 mr-0"></i></button>';
                     }
@@ -167,6 +168,29 @@ function sendAssessmentResult(id)
         $.ajax({
             type: 'post',
             url: $('meta[name="base-path"]').attr('content') + '/admin/assessment/'+btoa(id)+'/send-assessment-result',
+            dataType: 'json',
+            success: function (response) {
+                if(response.status === true) {
+                    trigger_pnofify('success', 'Successful', response.message);
+                    console.log(response.html);
+                } else {
+                    trigger_pnofify('error', 'Something went wrong', response.message);
+                }
+                //ASSESSMENT_TABLE.ajax.reload();
+            }
+        });
+    } else {
+        return true;
+    }
+
+}
+
+function sendAssessmentResultBulk()
+{
+    if(confirm('Are you sure to send assessment result in bulk?')) {
+        $.ajax({
+            type: 'post',
+            url: $('meta[name="base-path"]').attr('content') + '/admin/assessment/send-assessment-result-bulk',
             dataType: 'json',
             success: function (response) {
                 if(response.status === true) {
