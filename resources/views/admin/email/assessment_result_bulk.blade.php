@@ -44,7 +44,7 @@
                         @php
                             $resultUserAssessmentIds = $user->userAssessments->pluck('id');
                         @endphp
-                        {{ dd($resultUserAssessmentIds) }}
+                        {{ dd($resultUserAssessmentIds->toArray()) }}
                         @if(in_array($assessment->id, $resultUserAssessmentIds))
                             @php
                                 $totalMarksObtained = $totalMarksObtained + $userAssessment->marks_obtained;
