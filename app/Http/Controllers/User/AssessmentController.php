@@ -111,7 +111,7 @@ class AssessmentController extends Controller
     {
         $this->data['resultAssessment'] = Assessment::findOrFail(base64_decode($assessment_id));
         $this->data['resultUserAssessment'] = UserAssessment::whereAssessmentId(base64_decode($assessment_id))->whereUserId(Auth::id())->first();
-        $this->data['resultQuestions'] = Question::with('options')->whereAssessmentId(base64_decode($assessment_id))->whereStatus(1)->get();
+        $this->data['resultQuestions'] = Question::with('options')->whereAssessmentId(base64_decode($assessment_id))->whereStatus(1)->get()->shuffle();
         return view('user.assessment.test', $this->data);
     }
 
