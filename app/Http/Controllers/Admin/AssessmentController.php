@@ -238,7 +238,7 @@ class AssessmentController extends Controller
             $query = User::query();
             $query->whereRoleId(2);
             //$query->whereDesignationId(2);
-            $query->whereNotIn('designation_id', [4,5]);
+            $query->whereNotIn('department_id', [4,5]);
             $query->whereNotIn('employee_code', ['VBS034']);
             $query->orderBy('employee_code');
             $this->data['results'] = $query->get();
