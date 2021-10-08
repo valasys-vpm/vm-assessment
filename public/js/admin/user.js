@@ -34,7 +34,9 @@ $(function (){
                 data: 'employee_code',
             },
             {
-                data: 'first_name'+'last_name',
+                render: function (data, type, row) {
+                    return row.first_name + ' ' + row.last_name;
+                }
             },
             {
                 data: 'email',
