@@ -52,7 +52,7 @@
                                     $totalMarksObtained = $totalMarksObtained + $userAssessment->marks_obtained;
                                 @endphp
                                 <td>{{ $userAssessment->marks_obtained }}</td>
-                                <td>{{ ($userAssessment->marks_obtained/$assessment->number_of_questions) * 100 }}%</td>
+                                <td>{{ number_format((float)($userAssessment->marks_obtained/$assessment->number_of_questions) * 100, 2, '.', '') }} %</td>
                             @endif
                         @endforeach
                     @else
@@ -62,7 +62,7 @@
                 @endforeach
             @endif
             <td>{{ $totalMarksObtained }}</td>
-            <td>@if($totalMarks > 0) {{ ($totalMarksObtained/$totalMarks) * 100 }}% @else 00% @endif</td>
+            <td>@if($totalMarks > 0) {{  number_format((float)($totalMarksObtained/$totalMarks) * 100, 2, '.', '') }} % @else 00% @endif</td>
         </tr>
         @endforeach
     </tbody>
