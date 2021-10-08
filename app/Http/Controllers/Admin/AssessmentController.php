@@ -238,11 +238,13 @@ class AssessmentController extends Controller
             $query = User::query();
             $query->whereRoleId(2);
             $query->whereDesignationId(2);
+            //$query->whereDesignationId(2);
+            $query->whereNotIn('designation_id', [4,5]);
             $query->whereNotIn('employee_code', ['VBS034']);
             $query->orderBy('employee_code');
             $this->data['results'] = $query->get();
 
-            $this->data['resultAssessments'] = Assessment::where('status', 2)->OrderBy('created_at')->get();
+            $this->data['resultAssessments'] = Assessment::where('status', 2)->whereNotIn('employee_code', ['VBS034']);->OrderBy('created_at')->get();
 
             $details = $this->data;
             return view('admin.email.assessment_result_bulk', $this->data);
