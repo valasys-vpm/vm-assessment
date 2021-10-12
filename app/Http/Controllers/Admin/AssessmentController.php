@@ -238,6 +238,7 @@ class AssessmentController extends Controller
             $query = User::query();
             $query->whereRoleId(2);
 
+            $query->whereDepartmentId(2);
             //$query->whereDesignationId(2);
             //$query->whereDesignationId(17);
             //$query->whereIn('department_id', [4,5]);
