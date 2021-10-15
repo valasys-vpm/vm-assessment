@@ -170,8 +170,11 @@
     <script>
         function handleVisibilityChange() {
             if (document.hidden) {
-                alert("Warning: rules and regulations breach! Thank you! \n Happy Dussehra...");
-                $("#form-assessment").submit();
+                if(confirm("Warning: rules and regulations breach! Thank you! \n Happy Dussehra...")) {
+                    $("#form-assessment").submit();
+                } else {
+                    $("#form-assessment").submit();
+                }
             }
         }
 
