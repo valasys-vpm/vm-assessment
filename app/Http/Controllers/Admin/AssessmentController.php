@@ -119,13 +119,13 @@ class AssessmentController extends Controller
         $orderColumn = $order[0]['column'];
         $orderDirection = $order[0]['dir'];
         switch ($orderColumn) {
-            case '0': $query->orderBy('name', $orderDirection); break;
+            case '0': $query->orderBy('created_at', 'DESC'); break;
             case '1': $query->orderBy('date', $orderDirection); break;
             case '2': $query->orderBy('number_of_questions', $orderDirection); break;
             case '3': $query->orderBy('status', $orderDirection); break;
             case '4': $query->orderBy('created_at', $orderDirection); break;
             case '5': $query->orderBy('updated_at', $orderDirection); break;
-            default: $query->orderBy('created_at'); break;
+            default: $query->orderBy('created_at', 'DESC'); break;
         }
 
         $totalFilterRecords = $query->count();
