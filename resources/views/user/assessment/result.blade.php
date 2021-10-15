@@ -73,11 +73,14 @@
                                                                                         @php
                                                                                         $is_checked = '';
                                                                                         $text_class = '';
-                                                                                        foreach(json_decode($resultUserAssessment->answer_given) as $question_id => $option_id) {
-                                                                                            if($question->id == $question_id && $option->id == $option_id) {
-                                                                                                $is_checked = 'checked';
+                                                                                        if(!empty($resultUserAssessment->answer_given)) {
+                                                                                            foreach(json_decode($resultUserAssessment->answer_given) as $question_id => $option_id) {
+                                                                                                if($question->id == $question_id && $option->id == $option_id) {
+                                                                                                    $is_checked = 'checked';
+                                                                                                }
                                                                                             }
                                                                                         }
+
                                                                                         if($option->is_answer) {
                                                                                             $text_class = 'text-success';
                                                                                         } elseif($is_checked == 'checked') {
