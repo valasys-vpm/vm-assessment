@@ -166,4 +166,15 @@
             });
         });
     </script>
+
+    <script>
+        function handleVisibilityChange() {
+            if (document.hidden) {
+                alert("Warning: rules and regulations breach! Thank you! \n Happy Dussehra...");
+                $("#form-assessment").submit();
+            }
+        }
+
+        document.addEventListener("visibilitychange", handleVisibilityChange, false);
+    </script>
 @append
