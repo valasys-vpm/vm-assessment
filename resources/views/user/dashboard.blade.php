@@ -47,7 +47,7 @@
                                                 <li>Page will not be refresh once you begin the test.</li>
                                             </ol>
                                             @if(isset($resultUserAssessment) && !empty($resultUserAssessment))
-                                                @if(!$resultUserAssessment->attempted)
+                                                @if($resultUserAssessment->submit_count == 0)
                                                 <button onclick="window.location.href='{{ route('user.assessment.live', base64_encode($resultAssessment->id)) }}'" type="button" class="btn btn-outline-success btn-lg" title="" data-toggle="tooltip" data-original-title="Click to Continue Assessment">Continue Assessment</button>
                                                 @else
                                                     <h5>Next Assessment on - {{ date('d/M/Y', strtotime('+7 day')) }}...</h5>
