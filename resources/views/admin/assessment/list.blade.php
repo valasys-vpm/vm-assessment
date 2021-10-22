@@ -40,7 +40,7 @@
                                             <div class="float-right">
                                                 <button type="button" class="btn btn-primary btn-square btn-sm" onclick="addAssessment();"><i class="feather icon-plus"></i>New Assessment</button>
                                                 <button type="button" class="btn btn-primary btn-square btn-sm" onclick="sendAssessmentResultBulk();"><i class="feather icon-mail"></i>Send Result</button>
-                                                <button type="button" class="btn btn-primary btn-square btn-sm" onclick="sendResult();"><i class="feather icon-mail"></i>Send Result New</button>
+                                                <button type="button" class="btn btn-primary btn-square btn-sm" onclick="sendResult();"><i class="feather icon-mail"></i>Download Result Bulk</button>
 
                                             </div>
                                         </div>
@@ -131,7 +131,7 @@
                         <div class="row">
                             <div class="col-md-12 form-group">
                                 <label for="department">Department Name</label>
-                                <select class="form-control btn-square" id="department" name="department">
+                                <select class="form-control btn-square" id="department" name="department" required>
                                     <option value="0">--- Select Department ---</option>
                                     <option value="operation">Operation</option>
                                     <option value="creative">Creative</option>
@@ -171,7 +171,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-square btn-sm" data-dismiss="modal">Close</button>
-                    <button id="modal-send-result-form-button-submit" type="button" class="btn btn-primary btn-square btn-sm">Send</button>
+                    <button id="modal-send-result-form-button-submit" type="button" class="btn btn-primary btn-square btn-sm">Submit</button>
                 </div>
             </div>
         </div>

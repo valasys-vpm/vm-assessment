@@ -36,6 +36,7 @@ class AssessmentController extends Controller
 
     public function index()
     {
+        //echo date('M-Y', strtotime('2021-10-01'));die;
         return view('admin.assessment.list');
     }
 
@@ -274,11 +275,31 @@ class AssessmentController extends Controller
     //         return response()->json(array('status' => false, 'message' => $response['message']));
     //     }
     // }
-    public function sendAssessmentResultBulk()
+    public function sendAssessmentResultBulk(Request $request)
     {
-        $department = $_POST['department'];
-        $month = $_POST['month'];
-        $year = $_POST['year'];
+        $department = $request->get('department');
+        $month = $request->get('month');
+        $year = $request->get('year');
+
+        if(!empty($year)) {
+            $yearName = date('Y', strtotime($year.'-01-01'));
+        } else {
+            $yearName = 'All';
+        }
+
+        if(!empty($month)) {
+            $monthName = date('M', strtotime('2021-'.$month.'-01'));
+            if(!empty($year)) {
+                $monthName = $monthName.'-';
+            } else {
+                $yearName = '';
+            }
+        } else {
+            $monthName = '';
+        }
+
+
+
         $response = array('status' => FALSE, 'message' => 'Something went wrong, please try again.');
         try {
             //Send Mail
@@ -287,26 +308,38 @@ class AssessmentController extends Controller
             if ($department == 'operation') {
                 $query->whereDepartmentId(2);
                 $groupId = 1;
-            }else{
-                $query->whereIn('department_id', [4,5]);
-                $groupId = 2;
-            }
 
-            //$query->whereDesignationId(2);
-            //$query->whereDesignationId(17);
-            //$query->whereIn('department_id', [4,5]);
+                $departmentName = 'Operation-'.$monthName.$yearName;
+            }else{
+                $query->whereNotIn('department_id', [1,2]);
+                $groupId = 2;
+                $departmentName = 'Creative-'.$monthName.$yearName;
+            }
 
             $query->whereNotIn('employee_code', ['VBS034']);
             $query->orderBy('employee_code');
             $this->data['results'] = $query->get();
-            //dd($this->data['results']->toArray());
-            $this->data['resultAssessments'] = Assessment::where('group_id', $groupId)->where('status', 2)->OrderBy('created_at')->whereMonth('date', $month)->whereYear('date', $year)->get();
-            //dd($this->data['resultAssessments']->toArray());
-            $details = $this->data;
+
+            $query2 = Assessment::query();
+            if(!empty($groupId)) {
+                $query2->where('group_id', $groupId);
+            }
+            $query2->where('status', 2);
+            $query2->OrderBy('created_at');
+
+            if(isset($month) && !empty($month)) {
+                $query2->whereMonth('date', $month);
+            }
+            if(isset($year) && !empty($year)) {
+                $query2->whereYear('date', $year);
+            }
+
+            $this->data['resultAssessments'] = $query2->get();
+
             //return view('admin.email.assessment_result_bulk', $this->data);
             $html = view('admin.email.assessment_result_bulk', $this->data)->render();
             Storage::makeDirectory('public/result');
-            $html_filename = date('dmyHis').'.html';
+            $html_filename = $departmentName.'.html';
             $filename = 'public/result/'.$html_filename;
             Storage::put($filename,$html);
 

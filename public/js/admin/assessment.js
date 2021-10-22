@@ -213,8 +213,8 @@ function resetSendResultModalForm() {
 
 }
 $('#modal-send-result-form-button-submit').on('click', function (e) {
-    if ($('#department').val() == 0 || $('#month').val() == 0 || $('#year').val() == 0) {
-        trigger_pnofify('error', 'Please select dropdown value');
+    if ($('#department').val() == 0) {
+        trigger_pnofify('error', 'Please select department');
         return false;
     }
     if (confirm('Are you sure to send assessment result in bulk?')) {
