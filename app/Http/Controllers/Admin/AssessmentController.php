@@ -13,6 +13,7 @@ use App\Repository\UserAssessmentRepository\UserAssessmentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class AssessmentController extends Controller
 {
@@ -230,15 +231,67 @@ class AssessmentController extends Controller
         }
     }
 
+    // public function sendAssessmentResultBulk()
+    // {
+    //     $response = array('status' => FALSE, 'message' => 'Something went wrong, please try again.');
+    //     try {
+    //         //Send Mail
+    //         $query = User::query();
+    //         $query->whereRoleId(2);
+
+    //         $query->whereDepartmentId(2);
+    //         //$query->whereDesignationId(2);
+    //         //$query->whereDesignationId(17);
+    //         //$query->whereIn('department_id', [4,5]);
+
+    //         $query->whereNotIn('employee_code', ['VBS034']);
+    //         $query->orderBy('employee_code');
+    //         $this->data['results'] = $query->get();
+    //         dd($this->data['results']->toArray());
+    //         $this->data['resultAssessments'] = Assessment::where('group_id', 1)->where('status', 2)->OrderBy('created_at')->whereMonth('date', 10)->whereYear('date', 2021)->get();
+
+    //         $details = $this->data;
+    //         return view('admin.email.assessment_result_bulk', $this->data);
+    //         $html = view('admin.email.assessment_result_bulk', $this->data)->render();
+    //         dd($html);
+    //         //return response()->json(array('status' => true, 'message' => $response['message'], 'html' => $html));
+    //         //dd($this->data['resultUserAssessment']->toArray());
+    //         Mail::send('admin.email.assessment_result_bulk', $details, function ($email) use ($details){
+    //             $email->to([
+    //                 'sagar@valasys.com',
+    //                 'tejaswi@valasys.com'
+    //             ])->subject('Result for '.$this->data['resultAssessment']->name.' | '.date('d-M-Y', strtotime($this->data['resultAssessment']->date)));
+    //         });
+    //         $response = array('status' => TRUE, 'message' => 'Mail sent successfully.');
+    //     } catch (\Exception $exception) {
+    //         dd($exception->getMessage());
+    //         $response = array('status' => FALSE, 'message' => 'Something went wrong, please try again.');
+    //     }
+
+    //     if($response['status'] == TRUE) {
+    //         return response()->json(array('status' => true, 'message' => $response['message']));
+    //     } else {
+    //         return response()->json(array('status' => false, 'message' => $response['message']));
+    //     }
+    // }
     public function sendAssessmentResultBulk()
     {
+        $department = $_POST['department'];
+        $month = $_POST['month'];
+        $year = $_POST['year'];
         $response = array('status' => FALSE, 'message' => 'Something went wrong, please try again.');
         try {
             //Send Mail
             $query = User::query();
             $query->whereRoleId(2);
+            if ($department == 'operation') {
+                $query->whereDepartmentId(2);
+                $groupId = 1;
+            }else{
+                $query->whereIn('department_id', [4,5]);
+                $groupId = 2;
+            }
 
-            $query->whereDepartmentId(2);
             //$query->whereDesignationId(2);
             //$query->whereDesignationId(17);
             //$query->whereIn('department_id', [4,5]);
@@ -246,24 +299,21 @@ class AssessmentController extends Controller
             $query->whereNotIn('employee_code', ['VBS034']);
             $query->orderBy('employee_code');
             $this->data['results'] = $query->get();
-
-            $this->data['resultAssessments'] = Assessment::where('group_id', 2)->where('status', 2)->OrderBy('created_at')->whereMonth('date', 10)->whereYear('date', 2021)->get();
-
+            //dd($this->data['results']->toArray());
+            $this->data['resultAssessments'] = Assessment::where('group_id', $groupId)->where('status', 2)->OrderBy('created_at')->whereMonth('date', $month)->whereYear('date', $year)->get();
+            //dd($this->data['resultAssessments']->toArray());
             $details = $this->data;
-            return view('admin.email.assessment_result_bulk', $this->data);
+            //return view('admin.email.assessment_result_bulk', $this->data);
             $html = view('admin.email.assessment_result_bulk', $this->data)->render();
-            dd($html);
-            //return response()->json(array('status' => true, 'message' => $response['message'], 'html' => $html));
-            //dd($this->data['resultUserAssessment']->toArray());
-            Mail::send('admin.email.assessment_result_bulk', $details, function ($email) use ($details){
-                $email->to([
-                    'sagar@valasys.com',
-                    'tejaswi@valasys.com'
-                ])->subject('Result for '.$this->data['resultAssessment']->name.' | '.date('d-M-Y', strtotime($this->data['resultAssessment']->date)));
-            });
-            $response = array('status' => TRUE, 'message' => 'Mail sent successfully.');
+            Storage::makeDirectory('public/result');
+            $html_filename = date('dmyHis').'.html';
+            $filename = 'public/result/'.$html_filename;
+            Storage::put($filename,$html);
+
+
+            $response = array('status' => TRUE, 'message' => $html_filename);
         } catch (\Exception $exception) {
-            dd($exception->getMessage());
+            //dd($exception->getMessage());
             $response = array('status' => FALSE, 'message' => 'Something went wrong, please try again.');
         }
 

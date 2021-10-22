@@ -40,6 +40,8 @@
                                             <div class="float-right">
                                                 <button type="button" class="btn btn-primary btn-square btn-sm" onclick="addAssessment();"><i class="feather icon-plus"></i>New Assessment</button>
                                                 <button type="button" class="btn btn-primary btn-square btn-sm" onclick="sendAssessmentResultBulk();"><i class="feather icon-mail"></i>Send Result</button>
+                                                <button type="button" class="btn btn-primary btn-square btn-sm" onclick="sendResult();"><i class="feather icon-mail"></i>Send Result New</button>
+
                                             </div>
                                         </div>
                                         <div class="card-block">
@@ -112,6 +114,80 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-square btn-sm" data-dismiss="modal">Close</button>
                     <button id="modal-form-button-submit" type="button" class="btn btn-primary btn-square btn-sm">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalSendResult" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h4" id="modal-heading">Result</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form id="modal-send-result-form">
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="department">Department Name</label>
+                                <select class="form-control btn-square" id="department" name="department">
+                                    <option value="0">--- Select Department ---</option>
+                                    <option value="operation">Operation</option>
+                                    <option value="creative">Creative</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="month">Month</label>
+                                <select class="form-control btn-square" id="month" name="month">
+                                    <option value="0">--- Select Month ---</option>
+                                    <option value="01">January</option>
+                                    <option value="02">February</option>
+                                    <option value="03">March</option>
+                                    <option value="04">April</option>
+                                    <option value="05">March</option>
+                                    <option value="06">June</option>
+                                    <option value="07">July</option>
+                                    <option value="08">August</option>
+                                    <option value="09">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="year">Year</label>
+                                <select class="form-control btn-square" id="year" name="year">
+                                    <option value="0">--- Select Year ---</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-square btn-sm" data-dismiss="modal">Close</button>
+                    <button id="modal-send-result-form-button-submit" type="button" class="btn btn-primary btn-square btn-sm">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalDownloadResult" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h4" id="modal-heading">Result</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <a id="btn-modal-download-result" href="" target="_blank" download>
+                        <button type="button" class="btn btn-success btn-lg btn-square">Download Result</button>
+                    </a>
                 </div>
             </div>
         </div>
