@@ -21,15 +21,22 @@ class HomeController extends Controller
 
     public function index()
     {
-        $this->data['resultAssessment'] = Assessment::whereStatus(1)->first();
+        $query = Assessment::query();
+        if(Auth::user()->department_id == 2) {
+            $query->where('group_id', 1);
+        } else {
+            $query->where('group_id', 2);
+        }
+        $this->data['resultAssessment'] = $query->whereStatus(1)->first();
+
         if(!empty($this->data['resultAssessment'])) {
             $this->data['resultUserAssessment'] = UserAssessment::whereAssessmentId($this->data['resultAssessment']->id)->whereUserId(Auth::id())->first();
         }
         return view('user.dashboard', $this->data);
     }
-    
 
-    
+
+
 
 
 }
