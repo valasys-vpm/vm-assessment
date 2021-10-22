@@ -65,7 +65,7 @@ class AssessmentRepository implements AssessmentInterface
             }
             $assessment->update();
             if($assessment->id) {
-                if($attributes['status'] == 1) {
+                if(0 && $attributes['status'] == 1) {
                     $query = Assessment::query();
                     $query->where('id', '!=', $assessment->id);
                     $query->where('status', '!=', 2);
