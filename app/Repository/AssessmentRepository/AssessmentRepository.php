@@ -33,12 +33,13 @@ class AssessmentRepository implements AssessmentInterface
         try {
             DB::beginTransaction();
             $assessment = new Assessment();
+            $assessment->group_id = $attributes['group_id'];
             $assessment->name = $attributes['name'];
             $assessment->date = date('Y-m-d', strtotime($attributes['date']));
             $assessment->number_of_questions = $attributes['number_of_questions'];
             $assessment->status = $attributes['status'];
             $assessment->save();
-            if($assessment->id) {
+            if ($assessment->id) {
                 DB::commit();
                 $response = array('status' => TRUE, 'message' => 'Assessment added successfully');
             } else {
@@ -57,15 +58,16 @@ class AssessmentRepository implements AssessmentInterface
         try {
             DB::beginTransaction();
             $assessment = $this->find($id);
+            $assessment->group_id = $attributes['group_id'];
             $assessment->name = $attributes['name'];
             $assessment->date = date('Y-m-d', strtotime($attributes['date']));
             $assessment->number_of_questions = $attributes['number_of_questions'];
-            if($assessment->status != 2) {
+            if ($assessment->status != 2) {
                 $assessment->status = $attributes['status'];
             }
             $assessment->update();
-            if($assessment->id) {
-                if(0 && $attributes['status'] == 1) {
+            if ($assessment->id) {
+                if (0 && $attributes['status'] == 1) {
                     $query = Assessment::query();
                     $query->where('id', '!=', $assessment->id);
                     $query->where('status', '!=', 2);
@@ -89,7 +91,7 @@ class AssessmentRepository implements AssessmentInterface
         try {
             DB::beginTransaction();
             $assessment = $this->find($id);
-            if($assessment->delete()) {
+            if ($assessment->delete()) {
                 DB::commit();
                 $response = array('status' => TRUE, 'message' => 'Assessment deleted successfully');
             } else {
@@ -101,5 +103,4 @@ class AssessmentRepository implements AssessmentInterface
         }
         return $response;
     }
-
 }

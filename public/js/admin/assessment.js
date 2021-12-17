@@ -1,27 +1,27 @@
-
 let URL = $('meta[name="base-path"]').attr('content');
 let ASSESSMENT_TABLE;
 
-$(function () {
+$(function() {
 
     ASSESSMENT_TABLE = $('#table-assessments').DataTable({
-        "lengthMenu": [[5, 10, 20, 30, 'all'], [5, 10, 20, 30, 'All']],
+        "lengthMenu": [
+            [5, 10, 20, 30, 'all'],
+            [5, 10, 20, 30, 'All']
+        ],
         "processing": true,
         "serverSide": true,
         "ajax": {
             "url": $('meta[name="base-path"]').attr('content') + '/admin/assessment/get-assessments',
             data: {
-                filters: function () {
-                    let obj = {
-                    };
+                filters: function() {
+                    let obj = {};
                     localStorage.setItem("filters", JSON.stringify(obj));
                     return JSON.stringify(obj);
                 }
             },
-            error: function (jqXHR, textStatus, errorThrown) { checkSession(jqXHR); }
+            error: function(jqXHR, textStatus, errorThrown) { checkSession(jqXHR); }
         },
-        "columns": [
-            {
+        "columns": [{
                 data: 'name',
             },
             {
@@ -31,27 +31,30 @@ $(function () {
                 data: 'number_of_questions',
             },
             {
-                render: function (data, type, row) {
+                render: function(data, type, row) {
                     switch (parseInt(row.status)) {
-                        case 1: return '<span class="badge badge-pill badge-info" style="padding: 5px;min-width:50px;">Active</span>';
-                        case 0: return '<span class="badge badge-pill badge-danger" style="padding: 5px;min-width:50px;">Inactive</span>';
-                        case 2: return '<span class="badge badge-pill badge-success" style="padding: 5px;min-width:50px;">Completed</span>';
+                        case 1:
+                            return '<span class="badge badge-pill badge-info" style="padding: 5px;min-width:50px;">Active</span>';
+                        case 0:
+                            return '<span class="badge badge-pill badge-danger" style="padding: 5px;min-width:50px;">Inactive</span>';
+                        case 2:
+                            return '<span class="badge badge-pill badge-success" style="padding: 5px;min-width:50px;">Completed</span>';
                     }
                 }
             },
             {
-                render: function (data, type, row) {
+                render: function(data, type, row) {
                     return moment(row.created_at).format('YYYY-MM-DD HH:mm:ss');
                 }
             },
             {
-                render: function (data, type, row) {
+                render: function(data, type, row) {
                     return moment(row.updated_at).format('YYYY-MM-DD HH:mm:ss');
                 }
             },
             {
                 orderable: false,
-                render: function (data, type, row) {
+                render: function(data, type, row) {
                     let html = '';
                     if (parseInt($('#auth_user_id').val()) === 59) {
                         html += '<button class="btn btn-outline-primary btn-sm" title="View Assessment" onclick="window.location.href=\'' + $('meta[name="base-path"]').attr('content') + '/admin/assessment/' + btoa(row.id) + '/view-assessment\'"><i class="feather icon-eye mr-0"></i></button>';
@@ -67,7 +70,7 @@ $(function () {
         ]
     });
 
-    $('#modal-form-button-submit').on('click', function (e) {
+    $('#modal-form-button-submit').on('click', function(e) {
         e.preventDefault();
         let url = '';
         if ($(this).text() === 'Save') {
@@ -83,7 +86,7 @@ $(function () {
             type: 'post',
             url: url,
             data: $('#modal-assessment-form').serialize(),
-            success: function (response) {
+            success: function(response) {
                 if (response.status === true) {
                     resetModalForm();
                     $('#modalAssessment').modal('hide');
@@ -108,11 +111,12 @@ function editAssessment(id) {
         type: 'post',
         url: $('meta[name="base-path"]').attr('content') + '/admin/assessment/edit/' + btoa(id),
         dataType: 'json',
-        success: function (response) {
+        success: function(response) {
             if (response.status === true) {
                 $('#modal-heading').text('Edit assessment');
                 $('#modal-form-button-submit').text('Update');
                 $('#assessment_id').val(btoa(response.data.id));
+                $('#group_id').val(response.data.group_id);
                 $('#name').val(response.data.name);
                 $('#date').val(response.data.date);
                 $('#number_of_questions').val(response.data.number_of_questions);
@@ -133,7 +137,7 @@ function deleteAssessment(id) {
             type: 'post',
             url: $('meta[name="base-path"]').attr('content') + '/admin/assessment/destroy/' + btoa(id),
             dataType: 'json',
-            success: function (response) {
+            success: function(response) {
                 if (response.status === true) {
                     trigger_pnofify('success', 'Successful', response.message);
                 } else {
@@ -164,7 +168,7 @@ function sendAssessmentResult(id) {
             type: 'post',
             url: $('meta[name="base-path"]').attr('content') + '/admin/assessment/' + btoa(id) + '/send-assessment-result',
             dataType: 'json',
-            success: function (response) {
+            success: function(response) {
                 if (response.status === true) {
                     trigger_pnofify('success', 'Successful', response.message);
                     console.log(response.html);
@@ -186,7 +190,7 @@ function sendAssessmentResultBulk() {
             type: 'post',
             url: $('meta[name="base-path"]').attr('content') + '/admin/assessment/send-assessment-result-bulk',
             dataType: 'json',
-            success: function (response) {
+            success: function(response) {
                 if (response.status === true) {
                     trigger_pnofify('success', 'Successful', response.message);
                     console.log(response.html);
@@ -206,13 +210,14 @@ function sendResult() {
     resetSendResultModalForm();
     $('#modalSendResult').modal('show');
 }
+
 function resetSendResultModalForm() {
     $('#department').val('0');
     $('#month').val('0');
     $('#year').val('0');
 
 }
-$('#modal-send-result-form-button-submit').on('click', function (e) {
+$('#modal-send-result-form-button-submit').on('click', function(e) {
     if ($('#department').val() == 0) {
         trigger_pnofify('error', 'Please select department');
         return false;
@@ -223,9 +228,9 @@ $('#modal-send-result-form-button-submit').on('click', function (e) {
             url: URL + '/admin/assessment/send-assessment-result-bulk',
             data: $('#modal-send-result-form').serialize(),
             dataType: 'json',
-            success: function (response) {
+            success: function(response) {
                 if (response.status === true) {
-                    $('#btn-modal-download-result').attr('href', URL + '/public/storage/result/' +response.message);
+                    $('#btn-modal-download-result').attr('href', URL + '/public/storage/result/' + response.message);
                     $('#modalSendResult').modal('hide');
                     $('#modalDownloadResult').modal('show');
                     //trigger_pnofify('success', 'Successful', response.message);

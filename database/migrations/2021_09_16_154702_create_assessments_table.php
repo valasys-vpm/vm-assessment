@@ -15,6 +15,7 @@ class CreateAssessmentsTable extends Migration
     {
         Schema::create('assessments', function (Blueprint $table) {
             $table->increments('id');
+            $table->tinyInteger('group_id')->comment('1-Operation, 2-Creative');
             $table->string('name');
             $table->date('date');
             $table->integer('number_of_questions')->default(0);

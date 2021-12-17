@@ -26,8 +26,7 @@ class AssessmentController extends Controller
         AssessmentRepository $assessmentRepository,
         UserAssessmentRepository $userAssessmentRepository,
         CategoryRepository $categoryRepository
-    )
-    {
+    ) {
         $this->data = array();
         $this->assessmentRepository = $assessmentRepository;
         $this->userAssessmentRepository = $userAssessmentRepository;
@@ -58,7 +57,7 @@ class AssessmentController extends Controller
     {
         $attributes = $request->all();
         $response = $this->assessmentRepository->store($attributes);
-        if($response['status'] == TRUE) {
+        if ($response['status'] == TRUE) {
             return response()->json(array('status' => true, 'message' => $response['message']));
         } else {
             return response()->json(array('status' => false, 'message' => $response['message']));
@@ -68,7 +67,7 @@ class AssessmentController extends Controller
     public function edit($id): \Illuminate\Http\JsonResponse
     {
         $result = $this->assessmentRepository->find(base64_decode($id));
-        if(!empty($result)) {
+        if (!empty($result)) {
             return response()->json(array('status' => true, 'data' => $result));
         } else {
             return response()->json(array('status' => false, 'message' => 'Data not found'));
@@ -78,8 +77,8 @@ class AssessmentController extends Controller
     public function update($id, Request $request): \Illuminate\Http\JsonResponse
     {
         $attributes = $request->all();
-        $response = $this->assessmentRepository->update(base64_decode($id),$attributes);
-        if($response['status'] == TRUE) {
+        $response = $this->assessmentRepository->update(base64_decode($id), $attributes);
+        if ($response['status'] == TRUE) {
             return response()->json(array('status' => true, 'message' => $response['message']));
         } else {
             return response()->json(array('status' => false, 'message' => $response['message']));
@@ -89,14 +88,14 @@ class AssessmentController extends Controller
     public function destroy($id): \Illuminate\Http\JsonResponse
     {
         $response = $this->assessmentRepository->destroy(base64_decode($id));
-        if($response['status'] == TRUE) {
+        if ($response['status'] == TRUE) {
             return response()->json(array('status' => true, 'message' => $response['message']));
         } else {
             return response()->json(array('status' => false, 'message' => $response['message']));
         }
     }
 
-    public function getAssessments (Request $request): \Illuminate\Http\JsonResponse
+    public function getAssessments(Request $request): \Illuminate\Http\JsonResponse
     {
         $filters = array_filter(json_decode($request->get('filters'), true));
         $search_data = $request->get('search');
@@ -110,24 +109,39 @@ class AssessmentController extends Controller
         $totalRecords = $query->count();
 
         //Search Data
-        if(isset($searchValue) && $searchValue != "") {
+        if (isset($searchValue) && $searchValue != "") {
             $query->where("name", "like", "%$searchValue%");
         }
         //Filters
-        if(!empty($filters)) { }
+        if (!empty($filters)) {
+        }
 
 
         //Order By
         $orderColumn = $order[0]['column'];
         $orderDirection = $order[0]['dir'];
         switch ($orderColumn) {
-            case '0': $query->orderBy('created_at', 'DESC'); break;
-            case '1': $query->orderBy('date', $orderDirection); break;
-            case '2': $query->orderBy('number_of_questions', $orderDirection); break;
-            case '3': $query->orderBy('status', $orderDirection); break;
-            case '4': $query->orderBy('created_at', $orderDirection); break;
-            case '5': $query->orderBy('updated_at', $orderDirection); break;
-            default: $query->orderBy('created_at', 'DESC'); break;
+            case '0':
+                $query->orderBy('created_at', 'DESC');
+                break;
+            case '1':
+                $query->orderBy('date', $orderDirection);
+                break;
+            case '2':
+                $query->orderBy('number_of_questions', $orderDirection);
+                break;
+            case '3':
+                $query->orderBy('status', $orderDirection);
+                break;
+            case '4':
+                $query->orderBy('created_at', $orderDirection);
+                break;
+            case '5':
+                $query->orderBy('updated_at', $orderDirection);
+                break;
+            default:
+                $query->orderBy('created_at', 'DESC');
+                break;
         }
 
         $totalFilterRecords = $query->count();
@@ -145,7 +159,7 @@ class AssessmentController extends Controller
         return response()->json($ajaxData);
     }
 
-    public function getAssessmentResult ($id = null, Request $request): \Illuminate\Http\JsonResponse
+    public function getAssessmentResult($id = null, Request $request): \Illuminate\Http\JsonResponse
     {
         $filters = array_filter(json_decode($request->get('filters'), true));
         $search_data = $request->get('search');
@@ -163,27 +177,38 @@ class AssessmentController extends Controller
         $totalRecords = $query->count();
 
         //Search Data
-        if(isset($searchValue) && $searchValue != "") {
+        if (isset($searchValue) && $searchValue != "") {
             $query->where("name", "like", "%$searchValue%");
         }
         //Filters
-        if(!empty($filters)) { }
+        if (!empty($filters)) {
+        }
 
 
         //Order By
         $orderColumn = $order[0]['column'];
         $orderDirection = $order[0]['dir'];
         switch ($orderColumn) {
-            case '0': $query->orderBy('marks_obtained', $orderDirection); break;
-            case '1': $query->orderBy('attempted', $orderDirection); break;
-            case '2': $query->orderBy('marks_obtained', $orderDirection); break;
-            case '3': $query->orderBy('submit_count', $orderDirection); break;
-            default: $query->orderBy('marks_obtained', 'DESC'); break;
+            case '0':
+                $query->orderBy('marks_obtained', $orderDirection);
+                break;
+            case '1':
+                $query->orderBy('attempted', $orderDirection);
+                break;
+            case '2':
+                $query->orderBy('marks_obtained', $orderDirection);
+                break;
+            case '3':
+                $query->orderBy('submit_count', $orderDirection);
+                break;
+            default:
+                $query->orderBy('marks_obtained', 'DESC');
+                break;
         }
 
         $totalFilterRecords = $query->count();
 
-        if($limit > 0) {
+        if ($limit > 0) {
             $query->offset($offset);
             $query->limit($limit);
         }
@@ -204,7 +229,7 @@ class AssessmentController extends Controller
         $response = array('status' => FALSE, 'message' => 'Something went wrong, please try again.');
         try {
             //Send Mail
-            $this->data['resultUserAssessment'] = UserAssessment::with(['user' => function($user){
+            $this->data['resultUserAssessment'] = UserAssessment::with(['user' => function ($user) {
                 $user->with('designation');
             }])->whereAssessmentId(base64_decode($id))->get();
             $this->data['resultAssessment'] = Assessment::findOrFail(base64_decode($id));
@@ -213,11 +238,11 @@ class AssessmentController extends Controller
             dd($html);
             //return response()->json(array('status' => true, 'message' => $response['message'], 'html' => $html));
             //dd($this->data['resultUserAssessment']->toArray());
-            Mail::send('admin.email.assessment_result', $details, function ($email) use ($details){
+            Mail::send('admin.email.assessment_result', $details, function ($email) use ($details) {
                 $email->to([
                     'sagar@valasys.com',
                     'tejaswi@valasys.com'
-                ])->subject('Result for '.$this->data['resultAssessment']->name.' | '.date('d-M-Y', strtotime($this->data['resultAssessment']->date)));
+                ])->subject('Result for ' . $this->data['resultAssessment']->name . ' | ' . date('d-M-Y', strtotime($this->data['resultAssessment']->date)));
             });
             $response = array('status' => TRUE, 'message' => 'Mail sent successfully.');
         } catch (\Exception $exception) {
@@ -225,7 +250,7 @@ class AssessmentController extends Controller
             $response = array('status' => FALSE, 'message' => 'Something went wrong, please try again.');
         }
 
-        if($response['status'] == TRUE) {
+        if ($response['status'] == TRUE) {
             return response()->json(array('status' => true, 'message' => $response['message']));
         } else {
             return response()->json(array('status' => false, 'message' => $response['message']));
@@ -281,16 +306,16 @@ class AssessmentController extends Controller
         $month = $request->get('month');
         $year = $request->get('year');
 
-        if(!empty($year)) {
-            $yearName = date('Y', strtotime($year.'-01-01'));
+        if (!empty($year)) {
+            $yearName = date('Y', strtotime($year . '-01-01'));
         } else {
             $yearName = 'All';
         }
 
-        if(!empty($month)) {
-            $monthName = date('M', strtotime('2021-'.$month.'-01'));
-            if(!empty($year)) {
-                $monthName = $monthName.'-';
+        if (!empty($month)) {
+            $monthName = date('M', strtotime('2021-' . $month . '-01'));
+            if (!empty($year)) {
+                $monthName = $monthName . '-';
             } else {
                 $yearName = '';
             }
@@ -309,11 +334,11 @@ class AssessmentController extends Controller
                 $query->whereDepartmentId(2);
                 $groupId = 1;
 
-                $departmentName = 'Operation-'.$monthName.$yearName;
-            }else{
-                $query->whereNotIn('department_id', [1,2]);
+                $departmentName = 'Operation-' . $monthName . $yearName;
+            } else {
+                $query->whereNotIn('department_id', [1, 2]);
                 $groupId = 2;
-                $departmentName = 'Creative-'.$monthName.$yearName;
+                $departmentName = 'Creative-' . $monthName . $yearName;
             }
 
             $query->whereNotIn('employee_code', ['VBS034']);
@@ -321,16 +346,16 @@ class AssessmentController extends Controller
             $this->data['results'] = $query->get();
 
             $query2 = Assessment::query();
-            if(!empty($groupId)) {
+            if (!empty($groupId)) {
                 $query2->where('group_id', $groupId);
             }
             $query2->where('status', 2);
             $query2->OrderBy('created_at');
 
-            if(isset($month) && !empty($month)) {
+            if (isset($month) && !empty($month)) {
                 $query2->whereMonth('date', $month);
             }
-            if(isset($year) && !empty($year)) {
+            if (isset($year) && !empty($year)) {
                 $query2->whereYear('date', $year);
             }
 
@@ -339,9 +364,9 @@ class AssessmentController extends Controller
             //return view('admin.email.assessment_result_bulk', $this->data);
             $html = view('admin.email.assessment_result_bulk', $this->data)->render();
             Storage::makeDirectory('public/result');
-            $html_filename = $departmentName.'.html';
-            $filename = 'public/result/'.$html_filename;
-            Storage::put($filename,$html);
+            $html_filename = $departmentName . '.html';
+            $filename = 'public/result/' . $html_filename;
+            Storage::put($filename, $html);
 
 
             $response = array('status' => TRUE, 'message' => $html_filename);
@@ -350,11 +375,10 @@ class AssessmentController extends Controller
             $response = array('status' => FALSE, 'message' => 'Something went wrong, please try again.');
         }
 
-        if($response['status'] == TRUE) {
+        if ($response['status'] == TRUE) {
             return response()->json(array('status' => true, 'message' => $response['message']));
         } else {
             return response()->json(array('status' => false, 'message' => $response['message']));
         }
     }
-
 }

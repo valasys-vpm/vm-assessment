@@ -1,26 +1,26 @@
-
 let MYASSESSMENT_TABLE;
 
-$(function (){
+$(function() {
 
     MYASSESSMENT_TABLE = $('#table-myassessments').DataTable({
-        "lengthMenu": [ [10,25,50,100,'all'], [10,25,50,100,'All'] ],
+        "lengthMenu": [
+            [10, 25, 50, 100, 'all'],
+            [10, 25, 50, 100, 'All']
+        ],
         "processing": true,
         "serverSide": true,
         "ajax": {
             "url": $('meta[name="base-path"]').attr('content') + '/assessment/get-my-assessment',
             data: {
-                filters: function (){
-                    let obj = {
-                    };
+                filters: function() {
+                    let obj = {};
                     localStorage.setItem("filters", JSON.stringify(obj));
                     return JSON.stringify(obj);
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) { checkSession(jqXHR); }
         },
-        "columns": [
-            {
+        "columns": [{
                 data: 'assessment.name',
             },
             {
@@ -36,6 +36,5 @@ $(function (){
                 data: 'marks_obtained',
             },
         ]
-    });    
+    });
 });
-
