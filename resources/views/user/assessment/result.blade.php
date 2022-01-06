@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Assessment | ')
+@section('title', 'Assessment | Result')
 
 @section('content')
     <div class="pcoded-main-container" @if(Request::route()->getName() == 'user.assessment.live') style="margin-left: 0 !important;" @endif>
@@ -40,71 +40,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row" onmousedown="return false" onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
-                                <form class="col-md-12">
-                                    @csrf
-                                    <div class="row mt-4">
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @foreach($resultQuestions as $key => $question)
-                                            <div class="offset-2 offset-md-2 offset-sm-0 col-md-8 col-sm-12">
-                                                <div class="card card-border-c-blue">
-                                                    <div class="card-header">
-                                                        <div class="row">
-                                                            <div class="col-md-1 pr-0">
-                                                                <span class="text-secondary">{{ $i++ }})</span>
-                                                            </div>
-                                                            <div class="col-md-11 pl-0">
-                                                                <span class="text-secondary">{{ $question->question }}</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-block card-task">
-                                                        <div class="row">
-                                                            <div class="col-sm-12">
-                                                                <div class="task-detail">
-                                                                    @foreach($question->options as $option)
-                                                                        <div class="form-group">
-                                                                            <div class="d-inline">
-                                                                                <div class="row">
-                                                                                    <div class="col-md-1 pr-0" style="padding-top: 3px;">
-                                                                                        @php
-                                                                                        $is_checked = '';
-                                                                                        $text_class = '';
-                                                                                        if(!empty($resultUserAssessment->answer_given)) {
-                                                                                            foreach(json_decode($resultUserAssessment->answer_given) as $question_id => $option_id) {
-                                                                                                if($question->id == $question_id && $option->id == $option_id) {
-                                                                                                    $is_checked = 'checked';
-                                                                                                }
-                                                                                            }
-                                                                                        }
-
-                                                                                        if($option->is_answer) {
-                                                                                            $text_class = 'text-success';
-                                                                                        } elseif($is_checked == 'checked') {
-                                                                                            $text_class = 'text-danger';
-                                                                                        }
-                                                                                        @endphp
-                                                                                        <input type="radio" disabled {{ $is_checked }}>
-                                                                                    </div>
-                                                                                    <div class="col-md-11 pl-0">
-                                                                                        <label for="option_{{ $option->question_id.'_'.$option->id }}" class="cr {{ $text_class }}">{{ $option->option }}</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    @endforeach
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </form>
                             </div>
                             <!-- [ Main Content ] end -->
                         </div>

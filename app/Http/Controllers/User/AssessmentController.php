@@ -7,8 +7,10 @@ use App\Models\Assessment;
 use App\Models\Question;
 use App\Models\QuestionOption;
 use App\Models\UserAssessment;
+use App\Repository\AssessmentRepository\AssessmentRepository;
 use App\Repository\QuestionPaperRepository\QuestionPaperRepository;
 use App\Repository\QuestionRepository\QuestionRepository;
+use App\Repository\UserAssessmentRepository\UserAssessmentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,19 +20,40 @@ class AssessmentController extends Controller
     private $data;
     private $questionPaperRepository;
     private $questionRepository;
+    /**
+     * @var AssessmentRepository
+     */
+    private $assessmentRepository;
+    /**
+     * @var UserAssessmentRepository
+     */
+    private $userAssessmentRepository;
 
     public function __construct(
         QuestionPaperRepository $questionPaperRepository,
-        QuestionRepository $questionRepository)
+        QuestionRepository $questionRepository,
+        AssessmentRepository $assessmentRepository,
+        UserAssessmentRepository $userAssessmentRepository
+    )
     {
         $this->data = array();
         $this->questionPaperRepository = $questionPaperRepository;
         $this->questionRepository = $questionRepository;
+        $this->assessmentRepository = $assessmentRepository;
+        $this->userAssessmentRepository = $userAssessmentRepository;
     }
 
     public function index()
     {
         return view('user.assessment.list', $this->data);
+    }
+
+    public function show($id)
+    {
+        $this->data['resultUserAssessment'] = $this->userAssessmentRepository->find(base64_decode($id));
+        $this->data['resultQuestions'] = Question::with('options')->whereAssessmentId($this->data['resultUserAssessment']->assessment->id)->whereStatus(1)->get();
+        //dd($this->data['resultUserAssessment']->toArray());
+        return view('user.assessment.show', $this->data);
     }
 
     public function getMyAssessments(Request $request): \Illuminate\Http\JsonResponse

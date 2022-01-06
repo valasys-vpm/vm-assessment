@@ -22,6 +22,7 @@ class HomeController extends Controller
     public function index()
     {
         $query = Assessment::query();
+        //dd(Auth::user()->department_id);
         if(Auth::user()->department_id == 2) {
             $query->where('group_id', 1);
         } else {

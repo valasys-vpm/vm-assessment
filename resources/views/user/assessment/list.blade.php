@@ -48,6 +48,7 @@
                                                         <th>No. of <br>Questions</th>
                                                         <th>Attempted <br>Questions</th>
                                                         <th>Marks</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

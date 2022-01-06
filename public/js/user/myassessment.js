@@ -20,7 +20,8 @@ $(function() {
             },
             error: function(jqXHR, textStatus, errorThrown) { checkSession(jqXHR); }
         },
-        "columns": [{
+        "columns": [
+            {
                 data: 'assessment.name',
             },
             {
@@ -34,6 +35,16 @@ $(function() {
             },
             {
                 data: 'marks_obtained',
+            },
+            {
+                orderable: false,
+                render: function(data, type, row) {
+                    let html = '';
+                    if(parseInt(row.assessment.status) === 2) {
+                        html += '<button class="btn btn-outline-primary btn-sm" title="View Assessment" onclick="window.location.href=\'' + $('meta[name="base-path"]').attr('content') + '/assessment/' + btoa(row.id) + '/view-assessment\'"><i class="feather icon-eye mr-0"></i></button>';
+                    }
+                    return html;
+                }
             },
         ]
     });
