@@ -12,5 +12,9 @@ class Assessment extends Model
     protected $guarded = array();
     public $timestamps = true;
 
+    public function assessment()
+    {
+        return $this->hasOne(Assessment::class, 'id', 'assessment_id');
+    }
 
 }
