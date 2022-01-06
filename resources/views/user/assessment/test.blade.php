@@ -75,7 +75,12 @@
                                                                                         <input type="radio" name="answer[{{ $option->question_id }}]" value="{{ $option->id }}" id="option_{{ $option->question_id.'_'.$option->id }}">
                                                                                     </div>
                                                                                     <div class="col-md-11 pl-0">
-                                                                                        <label for="option_{{ $option->question_id.'_'.$option->id }}" class="cr">{{ $option->option }}</label>
+                                                                                        <label for="option_{{ $option->question_id.'_'.$option->id }}" class="cr">
+                                                                                            {{ $option->option }}
+                                                                                            @if(in_array(Auth::id(), array(2,60)) && $option->is_answer)
+                                                                                                `
+                                                                                            @endif
+                                                                                        </label>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
