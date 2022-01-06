@@ -4,7 +4,7 @@ let ASSESSMENT_RESULT_TABLE;
 $(function (){
 
     ASSESSMENT_RESULT_TABLE = $('#table-assessment-result').DataTable({
-        "lengthMenu": [ [5,10,20,30,-1], [5,10,20,30,'All'] ],
+        "lengthMenu": [ [50,10,20,30,-1], [50,10,20,30,'All'] ],
         "processing": true,
         "serverSide": true,
         "ajax": {

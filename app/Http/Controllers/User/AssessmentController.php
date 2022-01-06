@@ -124,15 +124,21 @@ class AssessmentController extends Controller
             DB::beginTransaction();
             $userAssessment = UserAssessment::findOrFail(base64_decode($attributes['user_assessment_id']));
             if($userAssessment->submit_count == 0) {
-                $userAssessment->answer_given = json_encode($attributes['answer']);
-                $userAssessment->attempted = count($attributes['answer']);
                 $marks = 0;
-                foreach ($attributes['answer'] as $question_id => $option_id) {
-                    $resultOption = QuestionOption::findOrFail($option_id);
-                    if($resultOption->is_answer) {
-                        $marks++;
+                if(isset($attributes['answer']) && count($attributes['answer'])) {
+                    $userAssessment->attempted = count($attributes['answer']);
+                    $userAssessment->answer_given = json_encode($attributes['answer']);
+                    foreach ($attributes['answer'] as $question_id => $option_id) {
+                        $resultOption = QuestionOption::findOrFail($option_id);
+                        if($resultOption->is_answer) {
+                            $marks++;
+                        }
                     }
+                } else {
+                    $userAssessment->attempted = 0;
+                    $userAssessment->answer_given = '{}';
                 }
+
                 $userAssessment->marks_obtained = $marks;
                 $userAssessment->submit_count = 1;
             } else {
@@ -141,7 +147,11 @@ class AssessmentController extends Controller
             $userAssessment->save();
             if($userAssessment->id) {
                 DB::commit();
-                $response = array('status' => TRUE, 'message' => 'Submitted Successfully...');
+                if($attributes['answer'] == 'normal') {
+                    $response = array('status' => TRUE, 'message' => 'Submitted Successfully...');
+                } else {
+                    $response = array('status' => TRUE, 'message' => 'Rules and regulations breach! Thank you!');
+                }
             } else {
                 throw new \Exception('Something went wrong, please try again.', 1);
             }
@@ -150,7 +160,7 @@ class AssessmentController extends Controller
             $response = array('status' => FALSE, 'message' => 'Something went wrong, please try again.');
         }
 
-        return redirect()->route('user.assessment.result', $attributes['user_assessment_id']);
+        return redirect()->route('user.assessment.result', $attributes['user_assessment_id'])->with('success', $response['message']);
     }
 
     public function assessmentResult($userAssessmentId)
