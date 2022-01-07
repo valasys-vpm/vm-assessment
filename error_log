@@ -1,0 +1,2 @@
+[24-Sep-2021 12:48:20 UTC] PHP Warning:  require(/home/hipe9nnpbrj2/public_html/assessment.valasysmedia.com/vendor/autoload.php): failed to open stream: No such file or directory in /home/hipe9nnpbrj2/public_html/assessment.valasysmedia.com/index.php on line 34
+[24-Sep-2021 12:48:20 UTC] PHP Fatal error:  require(): Failed opening required '/home/hipe9nnpbrj2/public_html/assessment.valasysmedia.com/vendor/autoload.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home/hipe9nnpbrj2/public_html/assessment.valasysmedia.com/index.php on line 34
