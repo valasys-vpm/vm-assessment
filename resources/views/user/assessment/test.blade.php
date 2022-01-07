@@ -13,12 +13,12 @@
                             <div class="row align-items-center">
                                 <div class="col-md-12">
                                     <div class="page-header-title">
-<!--                                        <h5 class="m-b-10">Dashboard</h5>-->
+                                        <!--                                        <h5 class="m-b-10">Dashboard</h5>-->
                                     </div>
                                     <ul class="breadcrumb">
-<!--                                        <li class="breadcrumb-item"><a href="javascript:void(0);"><i
-                                                    class="feather icon-home"></i></a></li>
-                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>-->
+                                        <!--                                        <li class="breadcrumb-item"><a href="javascript:void(0);"><i
+                                                                                            class="feather icon-home"></i></a></li>
+                                                                                <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>-->
                                     </ul>
                                 </div>
                             </div>
@@ -44,6 +44,7 @@
                             <div class="row" onmousedown="return false" onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
                                 <form id="form-assessment" action="{{ route('user.assessment.submit') }}" method="post" class="col-md-12">
                                     @csrf
+                                    <input type="hidden" id="submit_type" name="submit_type" value="normal">
                                     <input type="hidden" name="assessment_id" value="{{ base64_encode($resultAssessment->id) }}">
                                     <input type="hidden" name="user_assessment_id" value="{{ base64_encode($resultUserAssessment->id) }}">
                                     <div class="row mt-4">
@@ -175,11 +176,8 @@
     <script>
         function handleVisibilityChange() {
             if (document.hidden) {
-                if(confirm("Warning: rules and regulations breach! Thank you!")) {
-                    $("#form-assessment").submit();
-                } else {
-                    $("#form-assessment").submit();
-                }
+                $("#submit_type").val('cheating');
+                $("#form-assessment").submit();
             }
         }
 

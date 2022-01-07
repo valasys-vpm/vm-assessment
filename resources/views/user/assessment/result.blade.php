@@ -41,6 +41,25 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-sm-12 text-center">
+                                    <div class="card">
+                                        <div class="card-block">
+                                            <h3>Assessment submitted successfully.</h3>
+                                            <br>
+                                            <h1>
+                                                <span class="text-danger">Happy</span>
+                                                <span class="text-success">New</span>
+                                                <span class="text-warning">Year!</span>
+                                            </h1>
+                                            <br>
+                                            <p>
+                                                You can able to see assessment result once submitted by all users.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- [ Main Content ] end -->
                         </div>
                     </div>
