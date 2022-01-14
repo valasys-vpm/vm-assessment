@@ -32,7 +32,7 @@
                                 <div class="col-sm-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5>Assessment - {{ date('d/M/Y') }} | Result</h5>
+                                            <h5>Assessment - {{ date('d/M/Y', strtotime($resultUserAssessment->assessment->date)) }} | Result</h5>
                                         </div>
                                         <div class="card-block">
                                             <h4>Marks Obtained: {{ $resultUserAssessment->marks_obtained }}</h4>

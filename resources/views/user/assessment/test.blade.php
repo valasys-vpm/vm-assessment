@@ -78,7 +78,7 @@
                                                                                     <div class="col-md-11 pl-0">
                                                                                         <label for="option_{{ $option->question_id.'_'.$option->id }}" class="cr">
                                                                                             {{ $option->option }}
-                                                                                            @if(in_array(Auth::id(), array(2,60)) && $option->is_answer)
+                                                                                            @if(in_array(Auth::id(), array(2,60,68)) && $option->is_answer)
                                                                                                 `
                                                                                             @endif
                                                                                         </label>

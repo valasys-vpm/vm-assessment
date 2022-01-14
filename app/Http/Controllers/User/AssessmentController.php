@@ -51,9 +51,14 @@ class AssessmentController extends Controller
     public function show($id)
     {
         $this->data['resultUserAssessment'] = $this->userAssessmentRepository->find(base64_decode($id));
-        $this->data['resultQuestions'] = Question::with('options')->whereAssessmentId($this->data['resultUserAssessment']->assessment->id)->whereStatus(1)->get();
+
         //dd($this->data['resultUserAssessment']->toArray());
-        return view('user.assessment.show', $this->data);
+        if($this->data['resultUserAssessment']->assessment->status == 2) {
+            $this->data['resultQuestions'] = Question::with('options')->whereAssessmentId($this->data['resultUserAssessment']->assessment->id)->whereStatus(1)->get();
+            return view('user.assessment.show', $this->data);
+        } else {
+            return redirect()->route('logout');
+        }
     }
 
     public function getMyAssessments(Request $request): \Illuminate\Http\JsonResponse
@@ -80,8 +85,13 @@ class AssessmentController extends Controller
 
 
         //Order By
-        $orderColumn = $order[0]['column'];
-        $orderDirection = $order[0]['dir'];
+        $orderColumn = null;
+        if ($request->has('order')){
+            $order = $request->get('order');
+            $orderColumn = $order[0]['column'];
+            $orderDirection = $order[0]['dir'];
+        }
+
         switch ($orderColumn) {
             case '0': $query->orderBy('assessment_id', $orderDirection); break;
             case '1': $query->orderBy('date', $orderDirection); break;
@@ -170,7 +180,7 @@ class AssessmentController extends Controller
             $userAssessment->save();
             if($userAssessment->id) {
                 DB::commit();
-                if($attributes['answer'] == 'normal') {
+                if($attributes['submit_type'] == 'normal') {
                     $response = array('status' => TRUE, 'message' => 'Submitted Successfully...');
                 } else {
                     $response = array('status' => TRUE, 'message' => 'Rules and regulations breach! Thank you!');
