@@ -34,7 +34,7 @@
                                             <h5>Assessment - {{ date('d/M/Y', strtotime($resultUserAssessment->assessment->date)) }} | Result</h5>
                                         </div>
                                         <div class="card-block">
-{{--                                            <h4>Marks Obtained: {{ $resultUserAssessment->marks_obtained }}</h4>--}}
+                                            <h4>Marks Obtained: {{ $resultUserAssessment->marks_obtained }}</h4>
                                             <h4>Attempted: {{ $resultUserAssessment->attempted }}</h4>
                                             <h4>Total Questions: {{ $resultAssessment->number_of_questions }}</h4>
                                         </div>
