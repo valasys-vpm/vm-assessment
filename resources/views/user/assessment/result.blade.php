@@ -47,13 +47,13 @@
                                         <div class="card-block">
                                             <h3>Assessment submitted successfully.</h3>
                                             <br>
-                                            <h1>
+<!--                                            <h1>
                                                 <span class="text-danger">Happy</span>
                                                 <span class="text-success">Sankranti</span>
                                                 <span class="text-primary">&</span>
                                                 <span class="text-warning">Pongal!</span>
                                             </h1>
-                                            <br>
+                                            <br>-->
                                             <p>
                                                 You can able to see assessment result once submitted by all users.
                                             </p>
