@@ -49,6 +49,7 @@
                                                 <table id="table-users" class="display table nowrap table-striped table-hover">
                                                     <thead>
                                                     <tr>
+                                                        <th class="text-center" style="width: 20%;">Action</th>
                                                         <th class="text-center">Login<br>Status</th>
                                                         <th class="text-center">Employee<br>Code</th>
                                                         <th>Name</th>
@@ -59,7 +60,6 @@
                                                         <th class="text-center">Status</th>
                                                         <th class="text-center">Created At</th>
                                                         <th class="text-center">Updated At</th>
-                                                        <th class="text-center" style="width: 20%;">Action</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>

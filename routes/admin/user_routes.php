@@ -14,4 +14,6 @@ Route::prefix('user')->name('user.')->group(function()
 
     Route::any('/destroy/{id}', [App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('destroy');
 
+    Route::any('/reset-password/{id}', [App\Http\Controllers\Admin\UserController::class, 'resetPassword'])->name('reset_password');
+
 });

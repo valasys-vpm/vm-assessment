@@ -82,6 +82,17 @@ class UserController extends Controller
         }
     }
 
+    public function resetPassword($id): \Illuminate\Http\JsonResponse
+    {
+        $attributes['password'] = '12345678';
+        $response = $this->userRepository->update(base64_decode($id),$attributes);
+        if($response['status'] == TRUE) {
+            return response()->json(array('status' => true, 'message' => 'Password reset successfully'));
+        } else {
+            return response()->json(array('status' => false, 'message' => $response['message']));
+        }
+    }
+
     public function getUsers(Request $request): \Illuminate\Http\JsonResponse
     {
         $filters = array_filter(json_decode($request->get('filters'), true));

@@ -22,6 +22,24 @@ $(function (){
         },
         "columns": [
             {
+                orderable: false,
+                render: function (data, type, row) {
+                    let html = '';
+
+                    html += '<div id="toolbar-options-'+row.id+'" class="hidden">';
+                    html += '<a href="javascript:;" onclick="editUser('+row.id+')"><i class="feather icon-edit"></i></a>';
+                    html += '<a href="javascript:;" onclick="deleteUser('+row.id+')"><i class="feather icon-trash-2"></i></a>';
+                    html += '<a href="javascript:;" onclick="resetPassword('+row.id+')" title="Reset Password"><i class="feather icon-refresh-ccw"></i></a>';
+                    html += '</div>';
+
+                    html += '<div data-toolbar="user-options" class="btn-toolbar btn-dark btn-toolbar-dark dark-left-toolbar" id="dark-left-toolbar-'+row.id+'" data-id="'+row.id+'"><i class="feather icon-settings"></i></div>';
+
+                    //html += '<button class="btn btn-outline-dark btn-sm" title="Edit User" onclick="editUser('+row.id+')"><i class="feather icon-edit mr-0"></i></button>';
+                    //html += '<button class="btn btn-outline-danger btn-sm" title="Delete User" onclick="deleteUser('+row.id+')"><i class="feather icon-trash-2 mr-0"></i></button>';
+                    return html;
+                }
+            },
+            {
                 render: function (data, type, row) {
                     if(row.logged_on) {
                         return '<i class="fas fa-circle text-c-green m-r-15" style="font-size: 20px;" title="Online" data-toggle="tooltip" data-placement="top"></i>';
@@ -68,23 +86,7 @@ $(function (){
                     return moment(row.updated_at).format('DD MMM, YYYY [at] HH:mm A');
                 }
             },
-            {
-                orderable: false,
-                render: function (data, type, row) {
-                    let html = '';
 
-                    html += '<div id="toolbar-options-'+row.id+'" class="hidden">';
-                    html += '<a href="javascript:;" onclick="editUser('+row.id+')"><i class="feather icon-edit"></i></a>';
-                    html += '<a href="javascript:;" onclick="deleteUser('+row.id+')"><i class="feather icon-trash-2"></i></a>';
-                    html += '</div>';
-
-                    html += '<div data-toolbar="user-options" class="btn-toolbar btn-dark btn-toolbar-dark dark-left-toolbar" id="dark-left-toolbar-'+row.id+'" data-id="'+row.id+'"><i class="feather icon-settings"></i></div>';
-
-                    //html += '<button class="btn btn-outline-dark btn-sm" title="Edit User" onclick="editUser('+row.id+')"><i class="feather icon-edit mr-0"></i></button>';
-                    //html += '<button class="btn btn-outline-danger btn-sm" title="Delete User" onclick="deleteUser('+row.id+')"><i class="feather icon-trash-2 mr-0"></i></button>';
-                    return html;
-                }
-            },
         ],
         "fnDrawCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $('.dark-left-toolbar').each(function() {
@@ -308,7 +310,27 @@ function deleteUser(id)
     } else {
         return true;
     }
+}
 
+function resetPassword(id)
+{
+    if(confirm('Are you sure to reset password for this user?')) {
+        $.ajax({
+            type: 'post',
+            url: URL + '/admin/user/reset-password/'+btoa(id),
+            dataType: 'json',
+            success: function (response) {
+                if(response.status === true) {
+                    trigger_pnofify('success', 'Successful', response.message);
+                } else {
+                    trigger_pnofify('error', 'Something went wrong', response.message);
+                }
+                USER_TABLE.ajax.reload();
+            }
+        });
+    } else {
+        return true;
+    }
 }
 
 function resetModalForm()
