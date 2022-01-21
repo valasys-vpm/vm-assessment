@@ -328,12 +328,11 @@ class AssessmentController extends Controller
             $monthName = '';
         }
 
-
-
         $response = array('status' => FALSE, 'message' => 'Something went wrong, please try again.');
         try {
             //Send Mail
             $query = User::query();
+            $query->whereStatus(1);
             $query->whereRoleId(2);
             if ($department == 'operation') {
                 $query->whereDepartmentId(2);
