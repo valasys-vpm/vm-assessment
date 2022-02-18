@@ -67,7 +67,8 @@ $(function (){
                     return html;
                 }
             },
-        ]
+        ],
+        order:[]
     });
 
     $('#modal-form-button-submit').on('click', function (e) {

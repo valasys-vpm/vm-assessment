@@ -102,15 +102,20 @@ class QuestionController extends Controller
 
 
         //Order By
-        $orderColumn = $order[0]['column'];
-        $orderDirection = $order[0]['dir'];
+        $orderColumn = null;
+        if ($request->has('order')){
+            $order = $request->get('order');
+            $orderColumn = $order[0]['column'];
+            $orderDirection = $order[0]['dir'];
+        }
+
         switch ($orderColumn) {
             case '0': $query->orderBy('category_id', $orderDirection); break;
             case '1': $query->orderBy('question', $orderDirection); break;
             case '2': $query->orderBy('options', $orderDirection); break;
             case '3': $query->orderBy('created_at', $orderDirection); break;
             case '4': $query->orderBy('updated_at', $orderDirection); break;
-            default: $query->orderBy('created_at'); break;
+            default: $query->orderBy('created_at', 'desc'); break;
         }
 
         $totalFilterRecords = $query->count();
