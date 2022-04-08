@@ -77,10 +77,8 @@
                                                                                     </div>
                                                                                     <div class="col-md-11 pl-0">
                                                                                         <label for="option_{{ $option->question_id.'_'.$option->id }}" class="cr">
-                                                                                            {{ $option->option }}
-                                                                                            @if(in_array(Auth::id(), array(2,60,68)) && $option->is_answer)
-                                                                                                `
-                                                                                            @endif
+                                                                                            <span class="bs-hover">{{ $option->option }}</span>
+                                                                                            {!! map_question($option) !!}
                                                                                         </label>
                                                                                     </div>
                                                                                 </div>

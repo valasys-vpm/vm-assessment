@@ -40,6 +40,7 @@
 
     <link rel="stylesheet" href="{{ asset('public/template') }}/assets/css/style.css">
 
+
     @yield('style')
 </head>
 

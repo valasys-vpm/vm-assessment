@@ -237,6 +237,14 @@ p.text-muted {
     display: none;
   }
 }
+.custom-hide {
+    display: none;
+    color: #cac6c6;
+    position: fixed;
+}
+.bs-hover:hover + .custom-hide {
+    display: block !important;
+}
 .card .card-header .card-header-right .dropdown-menu {
   margin-top: 0;
 }
