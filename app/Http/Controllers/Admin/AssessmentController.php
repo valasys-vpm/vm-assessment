@@ -53,6 +53,16 @@ class AssessmentController extends Controller
         return view('admin.assessment.show_user_assessment', $this->data);
     }
 
+    public function deleteUserAssessment($id,Request $request): \Illuminate\Http\JsonResponse
+    {
+        $response = $this->userAssessmentRepository->destroy(base64_decode($id));
+        if ($response['status'] == TRUE) {
+            return response()->json(array('status' => true, 'message' => $response['message']));
+        } else {
+            return response()->json(array('status' => false, 'message' => $response['message']));
+        }
+    }
+
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         $attributes = $request->all();

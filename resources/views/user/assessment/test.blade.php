@@ -77,8 +77,8 @@
                                                                                     </div>
                                                                                     <div class="col-md-11 pl-0">
                                                                                         <label for="option_{{ $option->question_id.'_'.$option->id }}" class="cr">
-                                                                                            <span class="bs-hover">{{ $option->option }}</span>
-                                                                                            {!! map_question($option) !!}
+                                                                                            <span class="bs-parent" data-option-id="{{ $option->id }}">{{ $option->option }}</span>
+                                                                                            {!! map_question($option, $option->id) !!}
                                                                                         </label>
                                                                                     </div>
                                                                                 </div>
@@ -119,6 +119,18 @@
 
 @section('javascript')
     @parent
+
+    <script>
+        $(function(){
+            $('.bs-parent').on('mouseover', function (){
+                $('body').find('.bs-child-'+$(this).data('option-id')).css('display', 'block')
+            });
+
+            $('.bs-parent').on('mouseout', function (){
+                $('body').find('.bs-child-'+$(this).data('option-id')).css('display', 'none')
+            });
+        });
+    </script>
 
     <script>
         var newDate = new Date("{{ date('M d, Y H:i:s', strtotime($resultUserAssessment->created_at)) }}");
